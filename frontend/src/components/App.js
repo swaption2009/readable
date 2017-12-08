@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import './App.css';
+import { Container, Row, Col } from 'reactstrap';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        Hello World
-      </div>
+      <Container>
+        <Row>
+          <Col>
+            Hello World
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
