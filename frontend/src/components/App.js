@@ -8,21 +8,32 @@ class App extends Component {
     this.props.fetchCategories()
   }
 
+  onCategorySelected(category) {
+    console.log('I am clicked:', category.category.name)
+    // TODO create a filter function to show Post index page by category
+  }
+
   render() {
+    const categories = this.props.categories
+    // console.log(categories)
+
     return (
+      !categories ? <div>Loading...</div> :
       <Container sz="lg">
-        TODO iterate categories from redux store and replace ButtonGroup below
         <Row>
           <ButtonGroup>
-            <Button>React</Button>{' '}
-            <Button>Redux</Button>{' '}
-            <Button>Udacity</Button>
+            {categories.map(category =>
+              <Button key={category.name}
+                  onClick={() => this.onCategorySelected({category})}>
+                {category.name}
+              </Button>
+            )}
           </ButtonGroup>
         </Row>
 
         <Row>
           <Col>
-            hello world
+            Add Posts Index here!
           </Col>
         </Row>
 
@@ -32,7 +43,8 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { categories: state.categories };
+  // console.log(state.categories)
+  return { categories: state.categories.categories };
 }
 
 function mapDispatchToProps(dispatch) {

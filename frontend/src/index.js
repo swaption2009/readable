@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from './reducers'
 import promise from 'redux-promise'
 import { Provider } from 'react-redux'
-import { BroweserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
