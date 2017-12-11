@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts} from '../actions'
 import { Card, Button, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody, Alert } from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class PostsIndex extends Component {
   componentDidMount() {
@@ -10,7 +10,8 @@ class PostsIndex extends Component {
   }
 
   onCardSelected = (e) => {
-    console.log('this post id is clicked:', e.post.id)
+    // console.log('this post id is clicked:', e.post.id)
+    this.props.history.push(`/posts/${e.post.id}`)
   }
 
   render() {
@@ -21,15 +22,14 @@ class PostsIndex extends Component {
     }
 
     let filteredPosts
-
     if (filter) {
-      filteredPosts = posts.filter(post => post.category == filter)
+      filteredPosts = posts.filter(post => post.category === filter)
     } else {
       filteredPosts = posts
     }
 
     // TODO implement sort by
-    // TODO implement PostDetail component
+    // TODO implement PostDetail component using React Router
 
     return (
       <div>
@@ -39,10 +39,16 @@ class PostsIndex extends Component {
             <Card key={post.id} onClick={() => this.onCardSelected({post})}>
               <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap"/>
               <CardBody>
-                <CardTitle>{post.title}</CardTitle>
-                <CardSubtitle>Author: {post.author}</CardSubtitle>
+                <CardTitle className="text-primary">{post.title}</CardTitle>
+                <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle><br/>
                 <CardText>{post.body}</CardText>
-                <Button color="primary">{post.category}</Button>
+                <CardText className="text-danger">Votes: {post.voteScore}</CardText>
+                {/*
+                  TODO format Unix timestamp
+                  see: http://danhounshell.com/blog/how-to-convert-a-10-digit-timestamp-json-to-a-javascript-date/
+                */}
+                <CardText>{post.timestamp}</CardText>
+                <Button outline color="primary">category: {post.category}</Button>
               </CardBody>
             </Card>
           )}
@@ -62,4 +68,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsIndex)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsIndex))

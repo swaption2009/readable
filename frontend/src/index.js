@@ -7,7 +7,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reducer from './reducers'
 import promise from 'redux-promise'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import PostDetail from "./components/PostDetail";
+import PostsIndex from "./components/PostsIndex";
+import createHistory from 'history/createBrowserHistory';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -18,10 +21,16 @@ const store = createStore(
   )
 )
 
+export const history = createHistory()
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
+    <BrowserRouter >
+      <Switch history={history}>
+        <Route exact path="/" component={App} />
+        <Route exact path="/posts" component={PostsIndex} />
+        <Route path="/posts/:id" component={PostDetail} />
+      </Switch>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

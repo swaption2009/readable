@@ -49,7 +49,6 @@ class App extends Component {
         </Row>
         <br/>
         <Row>
-          {/*TODO complete onCategorySelected function to be passed to PostsIndex */}
           <PostsIndex filter={this.state.filter}/>
         </Row>
 
