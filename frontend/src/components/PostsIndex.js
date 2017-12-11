@@ -14,34 +14,46 @@ class PostsIndex extends Component {
   }
 
   render() {
-    const posts = this.props.posts
-    console.log('posts in post index', posts)
+    const { posts, filter } = this.props
+
+    if (!posts) {
+      return <div>Loading...</div>
+    }
+
+    let filteredPosts
+
+    if (filter) {
+      filteredPosts = posts.filter(post => post.category == filter)
+    } else {
+      filteredPosts = posts
+    }
+
+    // TODO implement sort by
+    // TODO implement PostDetail component
 
     return (
-      !posts ? <div>Loading...</div> :
-        <div>
-          <Alert color="success">Click card to see post detail</Alert>
-          <CardDeck>
-            {posts.map(post =>
-              <Card key={post.id} onClick={() => this.onCardSelected({post})}>
-                <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap" />
-                <CardBody>
-                  <CardTitle>{post.title}</CardTitle>
-                  <CardSubtitle>Author: {post.author}</CardSubtitle>
-                  <CardText>{post.body}</CardText>
-                  <Button color="primary">{post.category}</Button>
-                </CardBody>
-              </Card>
-            )}
-          </CardDeck>
-        </div>
+      <div>
+        <Alert color="success">Click card to see post detail</Alert>
+        <CardDeck>
+          {filteredPosts.map(post =>
+            <Card key={post.id} onClick={() => this.onCardSelected({post})}>
+              <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap"/>
+              <CardBody>
+                <CardTitle>{post.title}</CardTitle>
+                <CardSubtitle>Author: {post.author}</CardSubtitle>
+                <CardText>{post.body}</CardText>
+                <Button color="primary">{post.category}</Button>
+              </CardBody>
+            </Card>
+          )}
+        </CardDeck>
+      </div>
     )
   }
 }
 
 function mapStateToProps(state) {
-  // console.log(state.categories)
-  return { posts: state.posts.posts };
+  return { posts: state.posts.posts }
 }
 
 function mapDispatchToProps(dispatch) {

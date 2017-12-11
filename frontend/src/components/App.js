@@ -5,21 +5,33 @@ import { fetchCategories } from '../actions'
 import PostsIndex from './PostsIndex'
 
 class App extends Component {
+  state = {
+    filter: ''
+  }
   componentDidMount() {
     this.props.fetchCategories()
   }
 
   onCategorySelected = (category) => {
-    console.log('This category is clicked:', category.category.name)
-    // TODO create a filter function to show Post index page by category
+    // console.log('This category is clicked:', category.category.name)
+    this.setState({
+      filter: category.category.name
+    })
+  }
+
+  resetPage = () => {
+    window.location.reload()
   }
 
   render() {
     const categories = this.props.categories
     // console.log(categories)
 
+    if (!categories) {
+      return <div>Loading...</div>
+    }
+
     return (
-      !categories ? <div>Loading...</div> :
       <Container sz="lg">
         <br/>
         <Row>
@@ -32,12 +44,13 @@ class App extends Component {
                 {category.name}
               </Button>
             )}
+            <Button onClick={this.resetPage} outline color="danger">Show All</Button>
           </ButtonGroup>
         </Row>
         <br/>
         <Row>
           {/*TODO complete onCategorySelected function to be passed to PostsIndex */}
-          <PostsIndex/>
+          <PostsIndex filter={this.state.filter}/>
         </Row>
 
       </Container>
