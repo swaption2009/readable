@@ -13,7 +13,6 @@ class App extends Component {
   }
 
   onCategorySelected = (category) => {
-    // console.log('This category is clicked:', category.category.name)
     this.setState({
       filter: category.category.name
     })

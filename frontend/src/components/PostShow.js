@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost } from '../actions'
+import { fetchPost, fetchComments } from '../actions'
 import _ from 'lodash'
 import { Card, Button, CardTitle, CardText, CardSubtitle, CardBody, Navbar, Nav, NavItem} from 'reactstrap'
 import { Link } from 'react-router-dom'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
+import PostComment from './PostComment'
 
 class PostShow extends Component {
-  // TODO create Comment component
   // TODO create thumbs up & down function
   // TODO add comment (use Redux Form NewComment)
   // TODO edit post
@@ -16,6 +16,7 @@ class PostShow extends Component {
   componentDidMount() {
     const { id } = this.props.match.params
     this.props.fetchPost(id)
+    this.props.fetchComments(id)
   }
 
   render() {
@@ -26,7 +27,6 @@ class PostShow extends Component {
     }
 
     const post_array = _.toArray(post)
-    // console.log(post_array)
 
     return (
       <div>
@@ -34,7 +34,7 @@ class PostShow extends Component {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <Link to="/">
-                <FaArrowCircleLeft size={25} />
+                <FaArrowCircleLeft size={40} color='red' />
                 Back to post index page
               </Link>
             </NavItem>
@@ -52,6 +52,8 @@ class PostShow extends Component {
             <Button outline color="primary">category: {post_array[5]}</Button>
           </CardBody>
         </Card>
+
+        <PostComment parentId={post_array[0]}/>
       </div>
     )
   }
@@ -61,4 +63,4 @@ function mapStateToProps(state) {
   return { post: state.posts.post }
 }
 
-export default connect(mapStateToProps, { fetchPost })(PostShow)
+export default connect(mapStateToProps, { fetchPost, fetchComments })(PostShow)
