@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { FETCH_CATEGORIES, FETCH_POSTS } from "../actions";
+import { FETCH_CATEGORIES, FETCH_POSTS, FETCH_POST } from "../actions";
 
 function categories(state = {}, action) {
   // console.log(action)
@@ -17,6 +17,10 @@ function categories(state = {}, action) {
 function posts(state = {}, action) {
   // console.log(action.payload)
   switch (action.type) {
+    case FETCH_POST:
+      return {
+        post: action.payload.data
+      }
     case FETCH_POSTS:
       return {
         ...state,

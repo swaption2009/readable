@@ -8,7 +8,7 @@ import reducer from './reducers'
 import promise from 'redux-promise'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import PostDetail from "./components/PostDetail";
+import PostShow from "./components/PostShow";
 import PostsIndex from "./components/PostsIndex";
 import createHistory from 'history/createBrowserHistory';
 
@@ -29,7 +29,7 @@ ReactDOM.render(
       <Switch history={history}>
         <Route exact path="/" component={App} />
         <Route exact path="/posts" component={PostsIndex} />
-        <Route path="/posts/:id" component={PostDetail} />
+        <Route path="/posts/:id" component={PostShow} />
       </Switch>
     </BrowserRouter>
   </Provider>,

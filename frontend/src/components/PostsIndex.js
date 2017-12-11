@@ -10,7 +10,6 @@ class PostsIndex extends Component {
   }
 
   onCardSelected = (e) => {
-    // console.log('this post id is clicked:', e.post.id)
     this.props.history.push(`/posts/${e.post.id}`)
   }
 
@@ -29,7 +28,7 @@ class PostsIndex extends Component {
     }
 
     // TODO implement sort by
-    // TODO implement PostDetail component using React Router
+    // TODO implement PostShow component using React Router
     // TODO add new post button  (use Redux Form NewPost)
     // TODO implemnet React Router /:category
 
