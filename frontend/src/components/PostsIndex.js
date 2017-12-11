@@ -30,6 +30,8 @@ class PostsIndex extends Component {
 
     // TODO implement sort by
     // TODO implement PostDetail component using React Router
+    // TODO add new post button  (use Redux Form NewPost)
+    // TODO implemnet React Router /:category
 
     return (
       <div>

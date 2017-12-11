@@ -5,6 +5,10 @@ class PostDetail extends Component{
   // TODO connect to Redux store
   // TODO create Comment component
   // TODO create thumbs up & down function
+  // TODO implement React Router /:category/:post_id
+  // TODO add comment (use Redux Form NewComment)
+  // TODO edit post
+  // TODO delete post
 
   render() {
     return (
