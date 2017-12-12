@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchPosts} from '../actions'
-import { Card, Button, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody, Alert } from 'reactstrap'
-import { withRouter } from 'react-router-dom'
+import { Row, Col, Card, Button, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
+import { withRouter, Link } from 'react-router-dom'
 
 class PostsIndex extends Component {
   componentDidMount() {
@@ -29,12 +29,30 @@ class PostsIndex extends Component {
 
     // TODO implement sort by
     // TODO implement PostShow component using React Router (/:categories/:post
-    // TODO add new post button  (use Redux Form NewPost)
     // TODO implemnet React Router /:category
 
     return (
       <div>
-        <Alert color="success">Click card to see post detail</Alert>
+        <Row>
+          <Col className="col-xs-4">
+            <div className="text-xs-right">
+              <Link className="btn btn-success float-right" to="/posts/new">
+                Click this button to add a new post
+              </Link>
+            </div>
+          </Col>
+        </Row>
+        <br/>
+
+        <Row>
+          <div className="text-xs-right">
+            <button className="btn btn-info float-left">
+              Info: click inside the card to see post details
+            </button>
+          </div>
+        </Row>
+        <br/>
+
         <CardDeck>
           {filteredPosts.map(post =>
             <Card key={post.id} onClick={() => this.onCardSelected({post})}>
