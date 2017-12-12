@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { FETCH_CATEGORIES, FETCH_POSTS, FETCH_POST, FETCH_COMMENTS } from "../actions";
+import { reducer as formReducer } from 'redux-form'
 
 function categories(state = {}, action) {
   switch (action.type) {
@@ -45,4 +46,5 @@ export default combineReducers({
   categories,
   posts,
   comments,
+  form: formReducer,
 })

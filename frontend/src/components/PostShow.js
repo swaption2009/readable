@@ -9,7 +9,6 @@ import PostComment from './PostComment'
 import Votes from "./Votes";
 
 class PostShow extends Component {
-  // TODO add comment (use Redux Form NewComment)
   // TODO edit post
   // TODO delete post
 

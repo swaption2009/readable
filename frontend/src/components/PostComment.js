@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
-import Votes from "./Votes";
+import { Row, Col, Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
+import Votes from "./Votes"
+import { Link } from 'react-router-dom'
 
 class PostComment extends Component{
   // TODO edit comment
@@ -16,7 +17,17 @@ class PostComment extends Component{
 
     return (
       <div>
-        <br/>
+        <Row>
+          <Col className="col-xs-4">
+            <div className="text-xs-right">
+              {/*TODO fix Link to New Comment form /posts/${id}/comments/new */}
+              <Link className="btn btn-success float-right" to="/posts/new">
+                Click this button to add a new comment
+              </Link>
+            </div>
+          </Col>
+        </Row>
+
         <br/>
         { (comments.length === 0) ? <h4>This post needs a comment!!!</h4> :
         <div>
