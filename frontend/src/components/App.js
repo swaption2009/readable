@@ -16,10 +16,12 @@ class App extends Component {
     this.setState({
       filter: category.category.name
     })
+    this.props.history.push(`${category.category.name}`)
   }
 
   resetPage = () => {
     window.location.reload()
+    this.props.history.push("/")
   }
 
   render() {

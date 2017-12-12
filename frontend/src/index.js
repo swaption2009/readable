@@ -29,6 +29,7 @@ ReactDOM.render(
     <BrowserRouter >
       <Switch history={history}>
         <Route exact path="/" component={App} />
+        <Route exact path="/:category" component={App} />
         <Route exact path="/posts/new" component={NewPost} />
         <Route exact path="/posts" component={PostsIndex} />
         <Route exact path="/posts/:id" component={PostShow} />

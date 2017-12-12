@@ -27,9 +27,7 @@ class PostsIndex extends Component {
       filteredPosts = posts
     }
 
-    // TODO implement sort by
-    // TODO implement PostShow component using React Router (/:categories/:post
-    // TODO implemnet React Router /:category
+    // TODO implement sort-by
 
     return (
       <div>
