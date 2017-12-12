@@ -28,7 +28,7 @@ class PostsIndex extends Component {
     }
 
     // TODO implement sort by
-    // TODO implement PostShow component using React Router
+    // TODO implement PostShow component using React Router (/:categories/:post
     // TODO add new post button  (use Redux Form NewPost)
     // TODO implemnet React Router /:category
 

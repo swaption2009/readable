@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
+import Votes from "./Votes";
 
 class PostComment extends Component{
   // TODO add comment
@@ -31,6 +32,7 @@ class PostComment extends Component{
                   <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
                   {/* TODO format Unix timestamp */}
                   <CardText>{comment.timestamp}</CardText>
+                  <Votes/>
                 </CardBody>
               </Card>
             )}

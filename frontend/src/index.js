@@ -11,6 +11,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import PostShow from "./components/PostShow"
 import PostsIndex from "./components/PostsIndex"
 import createHistory from 'history/createBrowserHistory'
+import NewPost from "./forms/NewPost";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -28,6 +29,7 @@ ReactDOM.render(
     <BrowserRouter >
       <Switch history={history}>
         <Route exact path="/" component={App} />
+        <Route exact path="/posts/new" component={NewPost} />
         <Route exact path="/posts" component={PostsIndex} />
         <Route exact path="/posts/:id" component={PostShow} />
       </Switch>

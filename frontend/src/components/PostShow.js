@@ -6,6 +6,7 @@ import { Card, Button, CardTitle, CardText, CardSubtitle, CardBody, Navbar, Nav,
 import { Link } from 'react-router-dom'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
 import PostComment from './PostComment'
+import Votes from "./Votes";
 
 class PostShow extends Component {
   // TODO create thumbs up & down function
@@ -50,6 +51,7 @@ class PostShow extends Component {
             {/* TODO format Unix timestamp */}
             <CardText>{post_array[1]}</CardText>
             <Button outline color="primary">category: {post_array[5]}</Button>
+            <Votes/>
           </CardBody>
         </Card>
 
