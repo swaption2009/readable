@@ -9,7 +9,6 @@ import PostComment from './PostComment'
 import Votes from "./Votes";
 
 class PostShow extends Component {
-  // TODO create thumbs up & down function
   // TODO add comment (use Redux Form NewComment)
   // TODO edit post
   // TODO delete post
@@ -48,7 +47,6 @@ class PostShow extends Component {
             <CardSubtitle className="text-success">Author: {post_array[4]}</CardSubtitle><br/>
             <CardText>{post_array[3]}</CardText>
             <CardText className="text-danger">Votes: {post_array[6]}</CardText>
-            {/* TODO format Unix timestamp */}
             <CardText>{post_array[1]}</CardText>
             <Button outline color="primary">category: {post_array[5]}</Button>
             <Votes/>

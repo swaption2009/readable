@@ -60,10 +60,6 @@ class PostsIndex extends Component {
                 <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle><br/>
                 <CardText>{post.body}</CardText>
                 <CardText className="text-danger">Votes: {post.voteScore}</CardText>
-                {/*
-                  TODO format Unix timestamp
-                  see: http://danhounshell.com/blog/how-to-convert-a-10-digit-timestamp-json-to-a-javascript-date/
-                */}
                 <CardText>{post.timestamp}</CardText>
                 <Button outline color="primary">category: {post.category}</Button>
               </CardBody>

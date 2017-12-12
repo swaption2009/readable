@@ -4,7 +4,6 @@ import { Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'rea
 import Votes from "./Votes";
 
 class PostComment extends Component{
-  // TODO add comment
   // TODO edit comment
   // TODO delete comment
 
@@ -30,7 +29,6 @@ class PostComment extends Component{
                   <CardSubtitle className="text-success">Author: {comment.author}</CardSubtitle><br/>
                   <CardText>{comment.body}</CardText>
                   <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
-                  {/* TODO format Unix timestamp */}
                   <CardText>{comment.timestamp}</CardText>
                   <Votes/>
                 </CardBody>
