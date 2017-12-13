@@ -9,7 +9,8 @@ class PostComment extends Component{
   // TODO delete comment
 
   render() {
-    const { comments } = this.props
+    const { comments, parentId } = this.props
+    const COMMENT_FORM_URL = `/posts/${parentId}/comments/new`
 
     if (!comments) {
       return <div>Loading...</div>
@@ -20,8 +21,7 @@ class PostComment extends Component{
         <Row>
           <Col className="col-xs-4">
             <div className="text-xs-right">
-              {/*TODO fix Link to New Comment form /posts/${id}/comments/new */}
-              <Link className="btn btn-success float-right" to="/posts/new">
+              <Link className="btn btn-success float-right" to={COMMENT_FORM_URL}>
                 Click this button to add a new comment
               </Link>
             </div>
