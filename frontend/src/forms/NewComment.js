@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField'
 import { Link } from 'react-router-dom'
 import { Navbar, Nav, NavItem} from 'reactstrap'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
+import uuid from 'uuid'
 
 class NewComment extends Component {
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
@@ -16,6 +17,13 @@ class NewComment extends Component {
       {...custom}
     />
   )
+
+  onSubmit = (values) => {
+    values.id = uuid.v4()
+    values.timestamp = Date.now()
+    values.parentId = "8xf0y6ziyjabvozdd253nd" // TODO replace with react-router /:id match props
+    console.log('onSubmit values: ', values)
+  }
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props
@@ -36,7 +44,7 @@ class NewComment extends Component {
         <h2>New Comment Form</h2>
         <p>(UUID, Publised Date, and ParentID are created on the background)</p>
 
-        <form className="form-group" onSubmit={handleSubmit}>
+        <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
           <Field label="Body" name="body" type="text" component={this.renderTextField} /><br/>
           <Field label="Author" name="author" type="text" component={this.renderTextField} /><br/>
 

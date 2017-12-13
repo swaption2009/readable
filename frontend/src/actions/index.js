@@ -4,6 +4,7 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
+export const CREATE_POST = 'CREATE_POST'
 
 const ROOT_URL = "http://localhost:3001"
 
@@ -39,6 +40,18 @@ export function fetchComments(parentId) {
 
   return {
     type: FETCH_COMMENTS,
+    payload: request
+  }
+}
+
+export function createPost(newPost) {
+  const request = axios.post(`${ROOT_URL}/posts`, newPost,
+    { headers:
+      {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+  })
+
+  return {
+    type: CREATE_POST,
     payload: request
   }
 }

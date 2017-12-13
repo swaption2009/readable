@@ -4,11 +4,18 @@ import { Container, Button } from 'reactstrap'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-import { Link } from 'react-router-dom'
-import { Navbar, Nav, NavItem} from 'reactstrap'
+import { Link, Redirect } from 'react-router-dom'
+import { Navbar, Nav, NavItem } from 'reactstrap'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
+import uuid from 'uuid'
+import { connect } from 'react-redux'
+import { createPost } from "../actions";
 
 class NewPost extends Component {
+    state = {
+      redirectToHomePage: false
+    }
+
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField
       hintText={label}
@@ -30,9 +37,30 @@ class NewPost extends Component {
     />
   )
 
+  onSubmit = (values) => {
+    values.id = uuid.v4()
+    values.timestamp = Date.now()
+    // console.log('onSubmit values: ', values)
+    this.props.createPost(JSON.stringify(values))
+      .then(res => {
+        // console.log(res.payload.status)
+        if (res.payload.status === 200) {
+          // console.log("REDIRECTING...")
+          this.setState({redirectToHomePage: true});
+        } else {
+          console.log("ERROR");
+        }
+      })
+  }
+
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props
-    console.log('handleSubmit: ', handleSubmit)
+
+    if (this.state.redirectToHomePage) {
+      return (
+        <Redirect to="/"/>
+      )
+    }
 
     return (
       <Container>
@@ -50,7 +78,7 @@ class NewPost extends Component {
         <h2>New Page Form</h2>
         <p>(UUID and Publised Date are created on the background)</p>
 
-        <form className="form-group" onSubmit={handleSubmit}>
+        <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
           <Field label="Title" name="title" type="text" component={this.renderTextField} /><br/>
           <Field label="Body" name="body" type="text" component={this.renderTextField} /><br/>
           <Field label="Author" name="author" type="text" component={this.renderTextField} /><br/>
@@ -94,4 +122,4 @@ const validate = (values) => {
 export default reduxForm({
   validate,
   form: 'NewPostForm'
-})(NewPost)
+})(connect(null, { createPost })(NewPost))
