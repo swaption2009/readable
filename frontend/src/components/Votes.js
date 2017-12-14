@@ -1,17 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { postVote } from '../actions'
+import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up'
+import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down'
 
 class Votes extends Component {
+  onThumbsUp = () => {
+    const vote = { 'option': 'upVote'}
+    this.onSendVote(vote)
+  }
+
+  onThumbsDown = () => {
+    const vote = { 'option': 'downVote'}
+    this.onSendVote(vote)
+  }
+
+  onSendVote = (vote) => {
+    console.log(this.props.id, vote)
+    this.props.postVote(this.props.id, vote)
+  }
+
   render() {
-    // TODO how to increase / decrease votes using URL
-    // TODO import thumbs up & down from react-icons
-    // TODO write function (action creator & reducer)
+    console.log('from Votes component: ', this.props.id)
 
     return (
       <div>
-        Hello Voter
+        <FaThumbsOUp size={50} onClick={this.onThumbsUp} />
+        <FaThumbsODown size={50} onClick={this.onThumbsDown}/>
       </div>
     )
   }
 }
 
-export default Votes
+export default connect(null, { postVote })(Votes)

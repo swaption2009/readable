@@ -29,10 +29,9 @@ class NewComment extends Component {
     values.id = uuid.v4()
     values.timestamp = Date.now()
     values.parentId = this.props.match.params.id
-    // console.log('onSubmit values: ', JSON.stringify(values))
+    values.voteScore = 0
     this.props.createComment(JSON.stringify(values))
       .then(res => {
-        // console.log(res.payload.status)
         if (res.payload.status === 200) {
           console.log("SUCCESS! New comment has been created.")
           this.setState({redirectToPageShow: true});

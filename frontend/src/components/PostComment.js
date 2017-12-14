@@ -41,7 +41,7 @@ class PostComment extends Component{
                   <CardText>{comment.body}</CardText>
                   <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
                   <CardText>{comment.timestamp}</CardText>
-                  <Votes/>
+                  <Votes id={comment.id}/>
                 </CardBody>
               </Card>
             )}

@@ -45,14 +45,15 @@ class PostShow extends Component {
             <CardTitle className="text-primary">{post_array[2]}</CardTitle>
             <CardSubtitle className="text-success">Author: {post_array[4]}</CardSubtitle><br/>
             <CardText>{post_array[3]}</CardText>
-            <CardText className="text-danger">Votes: {post_array[6]}</CardText>
             <CardText>{post_array[1]}</CardText>
             <Button outline color="primary">category: {post_array[5]}</Button>
-            <Votes/>
+            <br/>
+            <Votes id={post_array[0]} />
+            <CardText className="text-danger">Votes: {post_array[6]}</CardText>
           </CardBody>
         </Card>
 
-        <PostComment parentId={post_array[0]}/>
+        <PostComment parentId={post_array[0]} />
       </div>
     )
   }

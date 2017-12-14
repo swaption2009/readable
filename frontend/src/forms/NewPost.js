@@ -40,7 +40,7 @@ class NewPost extends Component {
   onSubmit = (values) => {
     values.id = uuid.v4()
     values.timestamp = Date.now()
-    // console.log('onSubmit values: ', values)
+    values.voteScore = 0
     this.props.createPost(JSON.stringify(values))
       .then(res => {
         // console.log(res.payload.status)

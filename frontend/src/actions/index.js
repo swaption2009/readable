@@ -6,6 +6,7 @@ export const FETCH_POST = 'FETCH_POST'
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const POST_VOTE = 'POST_VOTE'
 
 const ROOT_URL = "http://localhost:3001"
 
@@ -65,6 +66,18 @@ export function createComment(newComment) {
 
   return {
     type: CREATE_COMMENT,
+    payload: request
+  }
+}
+
+export function postVote(id, option) {
+  const request = axios.post(`${ROOT_URL}/posts/${id}`, option,
+    { headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
+
+  return {
+    type: POST_VOTE,
     payload: request
   }
 }
