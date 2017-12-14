@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { fetchPosts} from '../actions'
 import { Row, Col, Card, Button, CardImg, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
 import { withRouter, Link } from 'react-router-dom'
+import Moment from 'react-moment'
 
 class PostsIndex extends Component {
   componentDidMount() {
@@ -58,9 +59,9 @@ class PostsIndex extends Component {
               <CardBody>
                 <CardTitle className="text-primary">{post.title}</CardTitle>
                 <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle><br/>
-                <CardText>{post.body}</CardText>
+                <CardText>Body: {post.body}</CardText>
                 <CardText className="text-danger">Votes: {post.voteScore}</CardText>
-                <CardText>{post.timestamp}</CardText>
+                <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>
                 <Button outline color="primary">category: {post.category}</Button>
               </CardBody>
             </Card>

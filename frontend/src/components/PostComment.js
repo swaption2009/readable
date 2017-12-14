@@ -4,6 +4,7 @@ import { Row, Col, Button, Card, CardTitle, CardText, CardDeck, CardSubtitle, Ca
 import Votes from "./Votes"
 import { Link } from 'react-router-dom'
 import { deleteComment } from '../actions'
+import Moment from 'react-moment'
 
 class PostComment extends Component{
   // TODO edit comment
@@ -52,8 +53,8 @@ class PostComment extends Component{
                 <CardBody>
                   <CardTitle className="text-primary">{comment.title}</CardTitle>
                   <CardSubtitle className="text-success">Author: {comment.author}</CardSubtitle><br/>
-                  <CardText>{comment.body}</CardText>
-                  <CardText>{comment.timestamp}</CardText>
+                  <CardText>Body: {comment.body}</CardText>
+                  <CardText>Published Date: <Moment unix>{comment.timestamp}</Moment></CardText>
                   <Votes id={comment.id} />
                   <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
                   <Button color="danger" data-message={comment.id} onClick={this.onDeleteComment}>Delete Post</Button>

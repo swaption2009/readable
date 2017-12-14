@@ -6,7 +6,8 @@ import { Card, Button, CardTitle, CardText, CardSubtitle, CardBody, Navbar, Nav,
 import { Link, Redirect } from 'react-router-dom'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
 import PostComment from './PostComment'
-import Votes from "./Votes";
+import Votes from "./Votes"
+import Moment from 'react-moment'
 
 class PostShow extends Component {
   // TODO edit post
@@ -68,8 +69,8 @@ class PostShow extends Component {
           <CardBody>
             <CardTitle className="text-primary">{post_array[2]}</CardTitle>
             <CardSubtitle className="text-success">Author: {post_array[4]}</CardSubtitle><br/>
-            <CardText>{post_array[3]}</CardText>
-            <CardText>{post_array[1]}</CardText>
+            <CardText>Body: {post_array[3]}</CardText>
+            <CardText>Published Date: <Moment unix>{post_array[1]}</Moment></CardText>
             <Button outline color="primary">category: {post_array[5]}</Button>
             <br/>
             <Votes id={post_array[0]} />
