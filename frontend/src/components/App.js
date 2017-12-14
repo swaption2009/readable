@@ -26,7 +26,6 @@ class App extends Component {
 
   render() {
     const categories = this.props.categories
-    // console.log(categories)
 
     if (!categories) {
       return <div>Loading...</div>
@@ -52,14 +51,12 @@ class App extends Component {
         <Row>
           <PostsIndex filter={this.state.filter}/>
         </Row>
-
       </Container>
     );
   }
 }
 
 function mapStateToProps(state) {
-  // console.log(state.categories)
   return { categories: state.categories.categories };
 }
 

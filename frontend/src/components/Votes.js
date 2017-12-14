@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { postVote } from '../actions'
+import { postVote, commentVote } from '../actions'
 import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up'
 import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down'
 
@@ -16,13 +16,12 @@ class Votes extends Component {
   }
 
   onSendVote = (vote) => {
-    console.log(this.props.id, vote)
     this.props.postVote(this.props.id, vote)
+    this.props.commentVote(this.props.id, vote)
+    window.location.reload()
   }
 
   render() {
-    console.log('from Votes component: ', this.props.id)
-
     return (
       <div>
         <FaThumbsOUp size={50} onClick={this.onThumbsUp} />
@@ -32,4 +31,4 @@ class Votes extends Component {
   }
 }
 
-export default connect(null, { postVote })(Votes)
+export default connect(null, { postVote, commentVote })(Votes)
