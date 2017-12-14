@@ -10,8 +10,6 @@ import Votes from "./Votes"
 import Moment from 'react-moment'
 
 class PostShow extends Component {
-  // TODO edit post
-
   state = {
     redirectToHomePage: false
   }
@@ -26,9 +24,7 @@ class PostShow extends Component {
     const { id } = this.props.match.params
     this.props.deletePost(id)
       .then(res => {
-        // console.log(res.payload.status)
         if (res.payload.status === 200) {
-          // console.log("REDIRECTING...")
           this.setState({redirectToHomePage: true});
         } else {
           console.log("ERROR");
@@ -38,6 +34,7 @@ class PostShow extends Component {
 
   render() {
     const { post } = this.props
+    const EDIT_POST_URL = `/posts/${this.props.match.params.id}/edit`
 
     if (!post) {
       return <div>Loading...</div>
@@ -60,6 +57,7 @@ class PostShow extends Component {
                 <FaArrowCircleLeft size={40} color="blue" />
                 Back to post index page
               </Link>{' '}
+              <Link to={EDIT_POST_URL}><Button color="warning">Edit Post</Button></Link>{' '}
               <Button color="danger" onClick={this.onDeletePost}>Delete Post</Button>
             </NavItem>
           </Nav>

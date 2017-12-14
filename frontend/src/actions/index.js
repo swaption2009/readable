@@ -4,12 +4,17 @@ export const FETCH_CATEGORIES = 'FETCH_CATEGORIES'
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const FETCH_POST = 'FETCH_POST'
 export const FETCH_COMMENTS = 'FETCH_COMMENTS'
+
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
+
 export const POST_VOTE = 'POST_VOTE'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
+
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+
+export const EDIT_POST = 'EDIT_POST'
 
 const ROOT_URL = "http://localhost:3001"
 
@@ -133,6 +138,20 @@ export function deleteComment(id) {
 
   return {
     type: DELETE_COMMENT,
+    payload: request
+  }
+}
+
+
+export function editPost(editPost) {
+  console.log('from action:', editPost)
+  const request = axios.put(`${ROOT_URL}/posts/6926c23f-8574-4582-8929-e2124ba040ee`, editPost,
+    { headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
+
+  return {
+    type: EDIT_POST,
     payload: request
   }
 }

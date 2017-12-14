@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { fetchPost, editPost } from "../actions"
+import { Field, reduxForm } from "redux-form"
 import { Container, Button } from 'reactstrap'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
@@ -7,13 +9,19 @@ import MenuItem from 'material-ui/MenuItem'
 import { Link, Redirect } from 'react-router-dom'
 import { Navbar, Nav, NavItem } from 'reactstrap'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
-import uuid from 'uuid'
-import { connect } from 'react-redux'
-import { createPost } from "../actions";
 
 class EditPost extends Component {
   state = {
+    post: {},
     redirectToHomePage: false
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params
+    this.props.fetchPost(id)
+      .then(res =>
+        this.setState({ post: res.payload.data })
+      )
   }
 
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
@@ -38,14 +46,11 @@ class EditPost extends Component {
   )
 
   onSubmit = (values) => {
-    values.id = uuid.v4()
+    values.id = this.props.match.params.id
     values.timestamp = Date.now()
-    values.voteScore = 0
-    this.props.createPost(JSON.stringify(values))
+    this.props.editPost(JSON.stringify(values))
       .then(res => {
-        // console.log(res.payload.status)
         if (res.payload.status === 200) {
-          // console.log("REDIRECTING...")
           this.setState({redirectToHomePage: true});
         } else {
           console.log("ERROR");
@@ -54,7 +59,12 @@ class EditPost extends Component {
   }
 
   render() {
+    const { post } = this.state
     const { handleSubmit, pristine, reset, submitting } = this.props
+
+    if (post.length === 0) {
+      <div>Loading...</div>
+    }
 
     if (this.state.redirectToHomePage) {
       return (
@@ -75,17 +85,32 @@ class EditPost extends Component {
           </Nav>
         </Navbar>
 
-        <h2>New Page Form</h2>
-        <p>(UUID and Publised Date are created on the background)</p>
+        <h2>Edit Page Form</h2>
+        <p>(Published Date will be updated on the background)</p>
 
         <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
-          <Field label="Title" name="title" type="text" component={this.renderTextField} /><br/>
-          <Field label="Body" name="body" type="text" component={this.renderTextField} /><br/>
-          <Field label="Author" name="author" type="text" component={this.renderTextField} /><br/>
-          <Field label="Category" name="category" component={this.renderSelectField}>
-            <MenuItem value="react" primaryText="React" />
-            <MenuItem value="redux" primaryText="Redux" />
-            <MenuItem value="udacity" primaryText="Udacity" />
+          <Field label="Title"
+                 name="title"
+                 type="text"
+                 placeholder={post.title}
+                 component={this.renderTextField}/><br/>
+          <Field label="Body"
+                 name="body"
+                 type="text"
+                 placeholder={post.body}
+                 component={this.renderTextField} /><br/>
+          <Field label="Author"
+                 name="author"
+                 type="text"
+                 placeholder={post.author}
+                 component={this.renderTextField} /><br/>
+          <Field label="Category"
+                 name="category"
+                 placeholder={post.category}
+                 component={this.renderSelectField}>
+            <MenuItem value="react" primaryText="react" />
+            <MenuItem value="redux" primaryText="redux" />
+            <MenuItem value="udacity" primaryText="udacity" />
           </Field><br/>
           <Button type="submit" color="primary" disabled={pristine || submitting}>
             Submit Form
@@ -100,26 +125,6 @@ class EditPost extends Component {
   }
 }
 
-const validate = (values) => {
-  const errors = {}
-
-  const requiredFields = [
-    'title',
-    'body',
-    'author',
-    'category',
-  ]
-
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = "Field can't be blank"
-    }
-  })
-
-  return errors
-}
-
 export default reduxForm({
-  validate,
   form: 'EditPostForm'
-})(connect(null, { createPost })(EditPost))
+})(connect(null, { fetchPost, editPost })(EditPost))
