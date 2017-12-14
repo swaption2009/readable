@@ -8,11 +8,17 @@ export const CREATE_POST = 'CREATE_POST'
 export const CREATE_COMMENT = 'CREATE_COMMENT'
 export const POST_VOTE = 'POST_VOTE'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
+export const DELETE_POST = 'DELETE_POST'
+export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 const ROOT_URL = "http://localhost:3001"
 
 export function fetchCategories() {
-  const request = axios.get(`${ROOT_URL}/categories`, {headers: {Authorization: 'udarocks'}})
+  const request = axios.get(`${ROOT_URL}/categories`,
+    {
+      headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
 
   return {
     type: FETCH_CATEGORIES,
@@ -21,7 +27,11 @@ export function fetchCategories() {
 }
 
 export function fetchPosts() {
-  const request = axios.get(`${ROOT_URL}/posts`, {headers: {Authorization: 'udarocks'}})
+  const request = axios.get(`${ROOT_URL}/posts`,
+    {
+      headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
 
   return {
     type: FETCH_POSTS,
@@ -30,7 +40,11 @@ export function fetchPosts() {
 }
 
 export function fetchPost(id) {
-  const request = axios.get(`${ROOT_URL}/posts/${id}`, {headers: {Authorization: 'udarocks'}})
+  const request = axios.get(`${ROOT_URL}/posts/${id}`,
+    {
+      headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
 
   return {
     type: FETCH_POST,
@@ -39,7 +53,11 @@ export function fetchPost(id) {
 }
 
 export function fetchComments(parentId) {
-  const request = axios.get(`${ROOT_URL}/posts/${parentId}/comments`, {headers: {Authorization: 'udarocks'}})
+  const request = axios.get(`${ROOT_URL}/posts/${parentId}/comments`,
+    {
+      headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
 
   return {
     type: FETCH_COMMENTS,
@@ -91,6 +109,30 @@ export function commentVote(id, option) {
 
   return {
     type: COMMENT_VOTE,
+    payload: request
+  }
+}
+
+export function deletePost(id) {
+  const request = axios.delete(`${ROOT_URL}/posts/${id}`,
+    { headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
+
+  return {
+    type: DELETE_POST,
+    payload: request
+  }
+}
+
+export function deleteComment(id) {
+  const request = axios.delete(`${ROOT_URL}/comments/${id}`,
+    { headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
+
+  return {
+    type: DELETE_COMMENT,
     payload: request
   }
 }

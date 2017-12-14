@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, fetchComments } from '../actions'
+import { fetchPost, fetchComments, deletePost } from '../actions'
 import _ from 'lodash'
 import { Card, Button, CardTitle, CardText, CardSubtitle, CardBody, Navbar, Nav, NavItem} from 'reactstrap'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
 import PostComment from './PostComment'
 import Votes from "./Votes";
 
 class PostShow extends Component {
   // TODO edit post
-  // TODO delete post
+
+  state = {
+    redirectToHomePage: false
+  }
 
   componentDidMount() {
     const { id } = this.props.match.params
@@ -18,11 +21,31 @@ class PostShow extends Component {
     this.props.fetchComments(id)
   }
 
+  onDeletePost = () => {
+    const { id } = this.props.match.params
+    this.props.deletePost(id)
+      .then(res => {
+        // console.log(res.payload.status)
+        if (res.payload.status === 200) {
+          // console.log("REDIRECTING...")
+          this.setState({redirectToHomePage: true});
+        } else {
+          console.log("ERROR");
+        }
+      })
+  }
+
   render() {
     const { post } = this.props
 
     if (!post) {
       return <div>Loading...</div>
+    }
+
+    if (this.state.redirectToHomePage) {
+      return (
+        <Redirect to="/"/>
+      )
     }
 
     const post_array = _.toArray(post)
@@ -33,9 +56,10 @@ class PostShow extends Component {
           <Nav className="ml-auto" navbar>
             <NavItem>
               <Link to="/">
-                <FaArrowCircleLeft size={40} color='red' />
+                <FaArrowCircleLeft size={40} color="blue" />
                 Back to post index page
-              </Link>
+              </Link>{' '}
+              <Button color="danger" onClick={this.onDeletePost}>Delete Post</Button>
             </NavItem>
           </Nav>
         </Navbar>
@@ -63,4 +87,4 @@ function mapStateToProps(state) {
   return { post: state.posts.post }
 }
 
-export default connect(mapStateToProps, { fetchPost, fetchComments })(PostShow)
+export default connect(mapStateToProps, { fetchPost, fetchComments, deletePost })(PostShow)
