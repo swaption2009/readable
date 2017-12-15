@@ -16,6 +16,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NewComment from "./forms/NewComment";
 import EditPost from "./forms/EditPost"
+import EditComment from "./forms/EditComment"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
@@ -38,6 +39,7 @@ ReactDOM.render(
           <Route exact path="/posts/new" component={NewPost} />
           <Route exact path="/posts" component={PostsIndex} />
           <Route exact path="/posts/:id/comments/new" component={NewComment} />
+          <Route exact path="/posts/:id/comments/:id/edit" component={EditComment} />
           <Route exact path="/posts/:id/edit" component={EditPost} />
           <Route exact path="/posts/:id" component={PostShow} />
         </Switch>

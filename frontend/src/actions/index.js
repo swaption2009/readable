@@ -15,6 +15,7 @@ export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export const EDIT_POST = 'EDIT_POST'
+export const EDIT_COMMENT = 'EDIT_COMMENT'
 
 const ROOT_URL = "http://localhost:3001"
 
@@ -142,10 +143,20 @@ export function deleteComment(id) {
   }
 }
 
+export function editPost(editPost, id) {
+  const request = axios.put(`${ROOT_URL}/posts/${id.id}`, editPost,
+    { headers:
+        {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
+    })
 
-export function editPost(editPost) {
-  console.log('from action:', editPost)
-  const request = axios.put(`${ROOT_URL}/posts/6926c23f-8574-4582-8929-e2124ba040ee`, editPost,
+  return {
+    type: EDIT_POST,
+    payload: request
+  }
+}
+
+export function editComment(editComment, id) {
+  const request = axios.put(`${ROOT_URL}/comments/${id}`, editComment,
     { headers:
         {'Content-Type': 'application/json', 'Authorization': 'udarocks'}
     })

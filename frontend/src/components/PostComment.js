@@ -2,20 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
 import Votes from "./Votes"
-import { Link } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 import { deleteComment } from '../actions'
 import Moment from 'react-moment'
 
 class PostComment extends Component{
-  // TODO edit comment
-
   onDeleteComment = (e) => {
     console.log('comment id to be deleted: ', e.target.dataset.message)
     this.props.deleteComment(e.target.dataset.message)
       .then(res => {
-        // console.log(res.payload.status)
-        if (res.payload.status === 200) {
-          // console.log("REDIRECTING...")
+        if (res.payload.status === 200) {// console.log("REDIRECTING...")
           window.location.reload()
         } else {
           console.log("ERROR");
@@ -57,6 +53,9 @@ class PostComment extends Component{
                   <CardText>Published Date: <Moment unix>{comment.timestamp}</Moment></CardText>
                   <Votes id={comment.id} />
                   <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
+                  <Link to={`/posts/${comment.parentId}/comments/${comment.id}/edit`}>
+                    <Button color="warning">Edit Post</Button>
+                  </Link>{' '}
                   <Button color="danger" data-message={comment.id} onClick={this.onDeleteComment}>Delete Post</Button>
                 </CardBody>
               </Card>

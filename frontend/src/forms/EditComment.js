@@ -1,27 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPost, editPost } from "../actions"
+import { fetchComments, editComment } from "../actions"
 import { Field, reduxForm } from "redux-form"
 import { Container, Button } from 'reactstrap'
 import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import { Link, Redirect } from 'react-router-dom'
-import { Navbar, Nav, NavItem } from 'reactstrap'
+import { Redirect, Link } from 'react-router-dom'
+import { Navbar, Nav, NavItem} from 'reactstrap'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
 
-class EditPost extends Component {
+class EditComment extends Component {
   state = {
-    post: {},
-    redirectToHomePage: false
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params
-    this.props.fetchPost(id)
-      .then(res =>
-        this.setState({ post: res.payload.data })
-      )
+    comment: this.props.comment,
+    redirectToPageShow: false
   }
 
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
@@ -34,24 +24,15 @@ class EditPost extends Component {
     />
   )
 
-  renderSelectField = ({input, label, meta: { touched, error }, children, ...custom }) => (
-    <SelectField
-      floatingLabelText={label}
-      errorText={touched && error}
-      {...input}
-      onChange={(event, index, value) => input.onChange(value)}
-      children={children}
-      {...custom}
-    />
-  )
-
   onSubmit = (values) => {
-    const id = this.props.match.params
+    const id = this.props.match.params.id
     values.timestamp = Date.now()
-    this.props.editPost(values, id)
+    console.log(values, id)
+    this.props.editComment(values, id)
       .then(res => {
         if (res.payload.status === 200) {
-          this.setState({redirectToHomePage: true});
+          // console.log("SUCCESS! Comment has been edited.")
+          this.setState({redirectToPageShow: true});
         } else {
           console.log("ERROR");
         }
@@ -59,16 +40,13 @@ class EditPost extends Component {
   }
 
   render() {
-    const { post } = this.state
     const { handleSubmit, pristine, reset, submitting } = this.props
+    const { comment } = this.state
+    // console.log('from EditComment component: ', comment)
 
-    if (post.length === 0) {
-      <div>Loading...</div>
-    }
-
-    if (this.state.redirectToHomePage) {
+    if (this.state.redirectToPageShow) {
       return (
-        <Redirect to="/"/>
+        <Redirect to="/" />
       )
     }
 
@@ -85,33 +63,21 @@ class EditPost extends Component {
           </Nav>
         </Navbar>
 
-        <h2>Edit Page Form</h2>
+        <h2>Edit Comment Form</h2>
         <p>(Published Date will be updated on the background)</p>
 
         <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
-          <Field label="Title"
-                 name="title"
-                 type="text"
-                 placeholder={post.title}
-                 component={this.renderTextField}/><br/>
           <Field label="Body"
                  name="body"
                  type="text"
-                 placeholder={post.body}
+                 placeholder={comment.body}
                  component={this.renderTextField} /><br/>
           <Field label="Author"
                  name="author"
                  type="text"
-                 placeholder={post.author}
+                 placeholder={comment.author}
                  component={this.renderTextField} /><br/>
-          <Field label="Category"
-                 name="category"
-                 placeholder={post.category}
-                 component={this.renderSelectField}>
-            <MenuItem value="react" primaryText="react" />
-            <MenuItem value="redux" primaryText="redux" />
-            <MenuItem value="udacity" primaryText="udacity" />
-          </Field><br/>
+
           <Button type="submit" color="primary" disabled={pristine || submitting}>
             Submit Form
           </Button>{' '}
@@ -125,6 +91,13 @@ class EditPost extends Component {
   }
 }
 
+function mapStateToProps(state, ownProps) {
+  const comments = state.comments.comments
+  const comment = comments.find(e => e.id = ownProps.match.params.id)
+
+  return { comment }
+}
+
 export default reduxForm({
-  form: 'EditPostForm'
-})(connect(null, { fetchPost, editPost })(EditPost))
+  form: 'EditCommentForm'
+})(connect(mapStateToProps, { fetchComments, editComment })(EditComment))
