@@ -162,7 +162,7 @@ export function editComment(editComment, id) {
     })
 
   return {
-    type: EDIT_POST,
+    type: EDIT_COMMENT,
     payload: request
   }
 }
