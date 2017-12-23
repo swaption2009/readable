@@ -1,22 +1,22 @@
-import { combineReducers } from 'redux'
-import { reducer as formReducer } from 'redux-form'
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import {
   FETCH_CATEGORIES,
   FETCH_POSTS,
   FETCH_POST,
   FETCH_COMMENTS,
   CREATE_COMMENT,
-} from "../actions";
+} from '../actions';
 
 function categories(state = {}, action) {
   switch (action.type) {
     case FETCH_CATEGORIES:
       return {
         ...state,
-        categories: action.payload.data.categories
-      }
+        categories: action.payload.data.categories,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -24,33 +24,33 @@ function posts(state = {}, action) {
   switch (action.type) {
     case FETCH_POST:
       return {
-        post: action.payload.data
-      }
+        post: action.payload.data,
+      };
     case FETCH_POSTS:
       return {
         ...state,
-        posts: action.payload.data
-      }
+        posts: action.payload.data,
+      };
     default:
-      return state
+      return state;
   }
 }
 
 function comments(state = {}, action) {
   switch (action.type) {
     case CREATE_COMMENT:
-      const newComment = JSON.parse(action.payload.config.data)
+      const newComment = JSON.parse(action.payload.config.data);
       return {
         ...state,
-        comments: [...state.comments, newComment]
-      }
+        comments: [...state.comments, newComment],
+      };
     case FETCH_COMMENTS:
       return {
         ...state,
-        comments: action.payload.data
-      }
+        comments: action.payload.data,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -59,4 +59,4 @@ export default combineReducers({
   posts,
   comments,
   form: formReducer,
-})
+});

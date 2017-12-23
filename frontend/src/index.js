@@ -35,13 +35,13 @@ ReactDOM.render(
       <BrowserRouter >
         <Switch history={history}>
           <Route exact path="/" component={App} />
-          <Route exact path="/:category" component={App} />
           <Route exact path="/posts/new" component={NewPost} />
           <Route exact path="/posts" component={PostsIndex} />
-          <Route exact path="/posts/:id/comments/new" component={NewComment} />
-          <Route exact path="/posts/:id/comments/:id/edit" component={EditComment} />
-          <Route exact path="/posts/:id/edit" component={EditPost} />
-          <Route exact path="/posts/:id" component={PostShow} />
+          <Route exact path="/:category" component={App} />
+          <Route exact path="/:category/:id" component={PostShow} />
+          <Route exact path="/:category/:id/edit" component={EditPost} />
+          <Route exact path="/:category/:id/comments/new" component={NewComment} />
+          <Route exact path="/:category/:id/comments/:id/edit" component={EditComment} />
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>

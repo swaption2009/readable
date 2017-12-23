@@ -16,45 +16,45 @@ import Cards from '../shared/Cards';
 class PostsIndex extends Component {
   state = {
     openDropdownMenu: false,
-    sortFilter: ''
+    sortFilter: '',
   };
   componentDidMount() {
     this.props.fetchPosts()
   };
+
   onCardSelected = (e) => {
     this.props.history.push(`/posts/${e.post.id}`)
   };
+
   toggle = () => {
     this.setState({
       openDropdownMenu: !this.state.openDropdownMenu
     });
   };
+
   selectedSortby = (e) => {
     this.setState({
-      sortFilter: e
-    })
+      sortFilter: e,
+    });
   };
 
-  // TODO fix thumbs up and down in Cards shared component
+  // TODO fix thumbs up and down mechanism in PostsIndex component
 
   render() {
     const { posts, filter } = this.props;
     const { sortFilter } = this.state;
-    
     if (!posts) {
       return <div>Loading...</div>
     }
-    
+
     let filteredPosts;
-    
     if (filter) {
-      filteredPosts = posts.filter(post => post.category === filter)
+      filteredPosts = posts.filter(post => post.category === filter);
     } else {
-      filteredPosts = posts
+      filteredPosts = posts;
     }
 
     let sortedPosts = filteredPosts;
-    
     sortedPosts.sort(sortBy(sortFilter));
 
     return (
@@ -124,8 +124,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-  (PostsIndex));
+  connect(mapStateToProps, mapDispatchToProps)
+  (PostsIndex)
+);

@@ -1,20 +1,24 @@
-import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
-import { Container, Button } from 'reactstrap'
-import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import { Link, Redirect } from 'react-router-dom'
-import { Navbar, Nav, NavItem } from 'reactstrap'
-import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
-import uuid from 'uuid'
-import { connect } from 'react-redux'
-import { createPost } from "../actions";
+import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { Container, Button } from 'reactstrap';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import { Link, Redirect } from 'react-router-dom';
+import {
+  Navbar,
+  Nav,
+  NavItem }
+  from 'reactstrap';
+import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
+import uuid from 'uuid';
+import { connect } from 'react-redux';
+import { createPost } from '../actions';
 
 class NewPost extends Component {
-    state = {
-      redirectToHomePage: false
-    }
+  state = {
+    redirectToHomePage: false,
+  };
 
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField
@@ -24,9 +28,9 @@ class NewPost extends Component {
       {...input}
       {...custom}
     />
-  )
+  );
 
-  renderSelectField = ({input, label, meta: { touched, error }, children, ...custom }) => (
+  renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
       floatingLabelText={label}
       errorText={touched && error}
@@ -35,31 +39,30 @@ class NewPost extends Component {
       children={children}
       {...custom}
     />
-  )
+  );
 
   onSubmit = (values) => {
-    values.id = uuid.v4()
-    values.timestamp = Date.now()
-    values.voteScore = 0
+    values.id = uuid.v4();
+    values.timestamp = Date.now();
+    values.voteScore = 0;
     this.props.createPost(JSON.stringify(values))
       .then(res => {
-        // console.log(res.payload.status)
         if (res.payload.status === 200) {
-          // console.log("REDIRECTING...")
-          this.setState({redirectToHomePage: true});
+          console.log('REDIRECTING...');
+          this.setState({ redirectToHomePage: true });
         } else {
-          console.log("ERROR");
+          console.log('ERROR');
         }
-      })
-  }
+      });
+  };
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { handleSubmit, pristine, reset, submitting } = this.props;
 
     if (this.state.redirectToHomePage) {
       return (
         <Redirect to="/"/>
-      )
+      );
     }
 
     return (
@@ -96,30 +99,29 @@ class NewPost extends Component {
           </Button>
         </form>
       </Container>
-    )
+    );
   }
 }
 
 const validate = (values) => {
-  const errors = {}
-
+  const errors = {};
   const requiredFields = [
     'title',
     'body',
     'author',
     'category',
-  ]
-
+  ];
   requiredFields.forEach(field => {
     if (!values[field]) {
-      errors[field] = "Field can't be blank"
+      errors[field] = "Field can't be blank";
     }
-  })
-
-  return errors
-}
+  });
+  return errors;
+};
 
 export default reduxForm({
   validate,
-  form: 'NewPostForm'
-})(connect(null, { createPost })(NewPost))
+  form: 'NewPostForm', })
+(connect(null, { createPost })
+(NewPost)
+);

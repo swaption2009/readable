@@ -1,18 +1,22 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchComments, editComment } from "../actions"
-import { Field, reduxForm } from "redux-form"
-import { Container, Button } from 'reactstrap'
-import TextField from 'material-ui/TextField'
-import { Redirect, Link } from 'react-router-dom'
-import { Navbar, Nav, NavItem} from 'reactstrap'
-import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchComments, editComment } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import { Container, Button } from 'reactstrap';
+import TextField from 'material-ui/TextField';
+import { Redirect, Link } from 'react-router-dom';
+import {
+  Navbar,
+  Nav,
+  NavItem }
+  from 'reactstrap';
+import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
 
 class EditComment extends Component {
   state = {
     comment: this.props.comment,
-    redirectToPageShow: false
-  }
+    redirectToPageShow: false,
+  };
 
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField
@@ -22,32 +26,31 @@ class EditComment extends Component {
       {...input}
       {...custom}
     />
-  )
+  );
 
   onSubmit = (values) => {
-    const id = this.props.match.params.id
-    values.timestamp = Date.now()
-    console.log(values, id)
+    const id = this.props.match.params.id;
+    values.timestamp = Date.now();
+    console.log(values, id);
     this.props.editComment(values, id)
       .then(res => {
         if (res.payload.status === 200) {
-          // console.log("SUCCESS! Comment has been edited.")
-          this.setState({redirectToPageShow: true});
+          console.log('SUCCESS! Comment has been edited.');
+          this.setState({ redirectToPageShow: true });
         } else {
-          console.log("ERROR");
+          console.log('ERROR');
         }
-      })
-  }
+      });
+  };
 
   render() {
-    const { handleSubmit, pristine, reset, submitting } = this.props
-    const { comment } = this.state
-    // console.log('from EditComment component: ', comment)
+    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { comment } = this.state;
 
     if (this.state.redirectToPageShow) {
       return (
         <Redirect to="/" />
-      )
+      );
     }
 
     return (
@@ -87,17 +90,18 @@ class EditComment extends Component {
           </Button>
         </form>
       </Container>
-    )
+    );
   }
 }
 
 function mapStateToProps(state, ownProps) {
-  const comments = state.comments.comments
-  const comment = comments.find(e => e.id = ownProps.match.params.id)
-
-  return { comment }
+  const comments = state.comments.comments;
+  const comment = comments.find(e => e.id = ownProps.match.params.id);
+  return { comment };
 }
 
 export default reduxForm({
-  form: 'EditCommentForm'
-})(connect(mapStateToProps, { fetchComments, editComment })(EditComment))
+  form: 'EditCommentForm', })
+  (connect(mapStateToProps, { fetchComments, editComment })
+  (EditComment)
+);

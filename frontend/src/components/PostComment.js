@@ -1,30 +1,43 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Row, Col, Button, Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
-import Votes from "../shared/Votes"
-import {  Link } from 'react-router-dom'
-import { deleteComment } from '../actions'
-import Moment from 'react-moment'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardTitle,
+  CardText,
+  CardDeck,
+  CardSubtitle,
+  CardBody }
+  from 'reactstrap';
+import Votes from '../shared/Votes';
+import { Link } from 'react-router-dom';
+import { deleteComment } from '../actions';
+import Moment from 'react-moment';
 
 class PostComment extends Component{
   onDeleteComment = (e) => {
-    console.log('comment id to be deleted: ', e.target.dataset.message)
+    console.log('comment id to be deleted: ', e.target.dataset.message);
     this.props.deleteComment(e.target.dataset.message)
       .then(res => {
-        if (res.payload.status === 200) {// console.log("REDIRECTING...")
-          window.location.reload()
+        if (res.payload.status === 200) {
+          window.location.reload(); // TODO refactor to state
         } else {
-          console.log("ERROR");
+          console.log('ERROR');
         }
-      })
-  }
+      });
+  };
 
+  // TODO refactor PostComment to Cards
   render() {
-    const { comments, parentId } = this.props
-    const COMMENT_FORM_URL = `/posts/${parentId}/comments/new`
+    const { comments, parentId } = this.props;
+    const COMMENT_FORM_URL = `/posts/${parentId}/comments/new`;
 
     if (!comments) {
-      return <div>Loading...</div>
+      return (
+        <div>Loading...</div>
+      );
     }
 
     return (
@@ -48,7 +61,9 @@ class PostComment extends Component{
               <Card key={comment.id}>
                 <CardBody>
                   <CardTitle className="text-primary">{comment.title}</CardTitle>
-                  <CardSubtitle className="text-success">Author: {comment.author}</CardSubtitle><br/>
+                  <CardSubtitle className="text-success">
+                    Author: {comment.author}
+                  </CardSubtitle><br/>
                   <CardText>Body: {comment.body}</CardText>
                   <CardText>Published Date: <Moment unix>{comment.timestamp}</Moment></CardText>
                   <Votes id={comment.id} />
@@ -56,7 +71,12 @@ class PostComment extends Component{
                   <Link to={`/posts/${comment.parentId}/comments/${comment.id}/edit`}>
                     <Button color="warning">Edit Post</Button>
                   </Link>{' '}
-                  <Button color="danger" data-message={comment.id} onClick={this.onDeleteComment}>Delete Post</Button>
+                  <Button
+                    color="danger"
+                    data-message={comment.id}
+                    onClick={this.onDeleteComment}>
+                    Delete Post
+                  </Button>
                 </CardBody>
               </Card>
             )}
@@ -64,12 +84,12 @@ class PostComment extends Component{
         </div>
         }
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps( {comments }) {
-  return { comments: comments.comments }
+function mapStateToProps({ comments }) {
+  return { comments: comments.comments };
 }
 
-export default connect(mapStateToProps, { deleteComment })(PostComment)
+export default connect(mapStateToProps, { deleteComment })(PostComment);
