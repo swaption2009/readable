@@ -1,31 +1,28 @@
-import React, { Component } from 'react'
-import { Container, Row, Col, Button, ButtonGroup } from 'reactstrap'
-import { connect } from 'react-redux'
-import { fetchCategories } from '../actions'
-import PostsIndex from './PostsIndex'
+import React, { Component } from 'react';
+import { Container, Row, Col, Button, ButtonGroup } from 'reactstrap';
+import { connect } from 'react-redux';
+import { fetchCategories } from '../actions';
+import PostsIndex from './PostsIndex';
 
 class App extends Component {
   state = {
     filter: ''
-  }
+  };
   componentDidMount() {
     this.props.fetchCategories()
   }
-
   onCategorySelected = (category) => {
     this.setState({
       filter: category.category.name
-    })
+    });
     this.props.history.push(`${category.category.name}`)
-  }
-
+  };
   resetPage = () => {
     window.location.reload()
     this.props.history.push("/")
-  }
-
+  };
   render() {
-    const categories = this.props.categories
+    const categories = this.props.categories;
 
     if (!categories) {
       return <div>Loading...</div>

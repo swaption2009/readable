@@ -6,7 +6,7 @@ import { Card, Button, CardTitle, CardText, CardSubtitle, CardBody, Navbar, Nav,
 import { Link, Redirect } from 'react-router-dom'
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
 import PostComment from './PostComment'
-import Votes from "./Votes"
+import Votes from "../shared/Votes"
 import Moment from 'react-moment'
 
 class PostShow extends Component {

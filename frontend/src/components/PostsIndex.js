@@ -1,57 +1,61 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchPosts} from '../actions'
-import { Row, Col, Card, Button, CardImg, CardTitle,
-  CardText, CardDeck, CardSubtitle, CardBody,
-  ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
-} from 'reactstrap'
-import { withRouter, Link } from 'react-router-dom'
-import Moment from 'react-moment'
-import sortBy from 'sort-by'
+import React, { Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../actions';
+import {
+  Row,
+  Col,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
+import sortBy from 'sort-by';
+import Cards from '../shared/Cards';
 
 class PostsIndex extends Component {
   state = {
-    dropdownOpen: false,
+    openDropdownMenu: false,
     sortFilter: ''
-  }
-
+  };
   componentDidMount() {
     this.props.fetchPosts()
-  }
-
+  };
   onCardSelected = (e) => {
     this.props.history.push(`/posts/${e.post.id}`)
-  }
-
+  };
   toggle = () => {
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      openDropdownMenu: !this.state.openDropdownMenu
     });
-  }
-
+  };
   selectedSortby = (e) => {
     this.setState({
       sortFilter: e
     })
-  }
+  };
+
+  // TODO fix thumbs up and down in Cards shared component
 
   render() {
-    const { posts, filter } = this.props
-    const { sortFilter } = this.state
-
+    const { posts, filter } = this.props;
+    const { sortFilter } = this.state;
+    
     if (!posts) {
       return <div>Loading...</div>
     }
-
-    let filteredPosts
+    
+    let filteredPosts;
+    
     if (filter) {
       filteredPosts = posts.filter(post => post.category === filter)
     } else {
       filteredPosts = posts
     }
 
-    let sortedPosts = filteredPosts
-    sortedPosts.sort(sortBy(sortFilter))
+    let sortedPosts = filteredPosts;
+    
+    sortedPosts.sort(sortBy(sortFilter));
 
     return (
       <div>
@@ -67,16 +71,25 @@ class PostsIndex extends Component {
         <br/>
 
         <Row>
-          <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+          <ButtonDropdown
+            isOpen={this.state.openDropdownMenu}
+            toggle={this.toggle}
+          >
             <DropdownToggle caret>
               Sort posts by:
             </DropdownToggle>
             <DropdownMenu>
-              <DropdownItem onClick={() => this.selectedSortby('title')}>Title</DropdownItem>
+              <DropdownItem onClick={() => this.selectedSortby('title')}>
+                Title
+              </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem onClick={() => this.selectedSortby('author')}>Author</DropdownItem>
+              <DropdownItem onClick={() => this.selectedSortby('author')}>
+                Author
+              </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem onClick={() => this.selectedSortby('timestamp')}>Published Date</DropdownItem>
+              <DropdownItem onClick={() => this.selectedSortby('timestamp')}>
+                Published Date
+              </DropdownItem>
             </DropdownMenu>
           </ButtonDropdown>
         </Row>
@@ -91,21 +104,10 @@ class PostsIndex extends Component {
         </Row>
         <br/>
 
-        <CardDeck>
-          {sortedPosts.map(post =>
-            <Card key={post.id} onClick={() => this.onCardSelected({post})}>
-              <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap"/>
-              <CardBody>
-                <CardTitle className="text-primary">{post.title}</CardTitle>
-                <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle><br/>
-                <CardText>Body: {post.body}</CardText>
-                <CardText className="text-danger">Votes: {post.voteScore}</CardText>
-                <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>
-                <Button outline color="primary">category: {post.category}</Button>
-              </CardBody>
-            </Card>
-          )}
-        </CardDeck>
+        <Cards
+          posts={sortedPosts}
+          onCardSelected={(e) => this.onCardSelected(e)}
+        />
       </div>
     )
   }
@@ -121,4 +123,9 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsIndex))
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+  (PostsIndex));

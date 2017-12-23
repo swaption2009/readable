@@ -8,6 +8,7 @@
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
     "moment": "^2.19.4",
+    "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-bootstrap-table": "^4.2.0",
     "react-dom": "^16.1.1",

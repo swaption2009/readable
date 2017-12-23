@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Card, CardTitle, CardText, CardDeck, CardSubtitle, CardBody } from 'reactstrap'
-import Votes from "./Votes"
+import Votes from "../shared/Votes"
 import {  Link } from 'react-router-dom'
 import { deleteComment } from '../actions'
 import Moment from 'react-moment'

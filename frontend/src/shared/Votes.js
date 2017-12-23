@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { postVote, commentVote } from '../actions'
+import { postVote, commentVote } from '../actions/index'
 import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up'
 import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down'
 
 class Votes extends Component {
   onThumbsUp = () => {
-    const vote = { 'option': 'upVote'}
-    this.onSendVote(vote)
-  }
+    const vote = { 'option': 'upVote' };
+    this.onSendVote(vote);
+  };
 
   onThumbsDown = () => {
-    const vote = { 'option': 'downVote'}
-    this.onSendVote(vote)
-  }
+    const vote = { 'option': 'downVote' };
+    this.onSendVote(vote);
+  };
 
   onSendVote = (vote) => {
-    this.props.postVote(this.props.id, vote)
-    this.props.commentVote(this.props.id, vote)
-    window.location.reload()
-  }
+    this.props.postVote(this.props.id, vote);
+    this.props.commentVote(this.props.id, vote);
+    // TODO refactor into state
+    window.location.reload();
+  };
 
   render() {
     return (

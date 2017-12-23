@@ -1,28 +1,27 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchPost, editPost } from "../actions"
-import { Field, reduxForm } from "redux-form"
-import { Container, Button } from 'reactstrap'
-import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import { Link, Redirect } from 'react-router-dom'
-import { Navbar, Nav, NavItem } from 'reactstrap'
-import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPost, editPost } from '../actions';
+import { Field, reduxForm } from 'redux-form';
+import { Container, Button } from 'reactstrap';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import { Link, Redirect } from 'react-router-dom';
+import { Navbar, Nav, NavItem } from 'reactstrap';
+import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
 
 class EditPost extends Component {
   state = {
     post: {},
-    redirectToHomePage: false
-  }
-
+    redirectToHomePage: false,
+  };
   componentDidMount() {
-    const { id } = this.props.match.params
+    const { id } = this.props.match.params;
     this.props.fetchPost(id)
       .then(res =>
         this.setState({ post: res.payload.data })
-      )
-  }
+      );
+  };
 
   renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
     <TextField
@@ -32,9 +31,8 @@ class EditPost extends Component {
       {...input}
       {...custom}
     />
-  )
-
-  renderSelectField = ({input, label, meta: { touched, error }, children, ...custom }) => (
+  );
+  renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
     <SelectField
       floatingLabelText={label}
       errorText={touched && error}
@@ -43,33 +41,32 @@ class EditPost extends Component {
       children={children}
       {...custom}
     />
-  )
-
+  );
   onSubmit = (values) => {
-    const id = this.props.match.params
-    values.timestamp = Date.now()
+    const id = this.props.match.params;
+    values.timestamp = Date.now();
     this.props.editPost(values, id)
       .then(res => {
         if (res.payload.status === 200) {
-          this.setState({redirectToHomePage: true});
+          this.setState({ redirectToHomePage: true });
         } else {
-          console.log("ERROR");
+          console.log('ERROR');
         }
-      })
-  }
+      });
+  };
 
   render() {
-    const { post } = this.state
-    const { handleSubmit, pristine, reset, submitting } = this.props
+    const { post } = this.state;
+    const { handleSubmit, pristine, reset, submitting } = this.props;
 
     if (post.length === 0) {
-      <div>Loading...</div>
+      <div>Loading...</div>;
     }
 
     if (this.state.redirectToHomePage) {
       return (
         <Redirect to="/"/>
-      )
+      );
     }
 
     return (
@@ -121,10 +118,10 @@ class EditPost extends Component {
           </Button>
         </form>
       </Container>
-    )
+    );
   }
 }
 
 export default reduxForm({
-  form: 'EditPostForm'
-})(connect(null, { fetchPost, editPost })(EditPost))
+  form: 'EditPostForm',
+})(connect(null, { fetchPost, editPost })(EditPost));
