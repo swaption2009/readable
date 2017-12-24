@@ -106,8 +106,7 @@ const validate = (values) => {
 
 export default reduxForm({
   validate,
-  form: 'NewCommentForm',
-})(
-  connect(null, { createComment })
-  (NewComment)
-);
+  form: 'NewCommentForm', })(connect(
+    null,
+    { createComment }
+)(NewComment));

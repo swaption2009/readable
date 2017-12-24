@@ -19,16 +19,16 @@ class PostsIndex extends Component {
     sortFilter: '',
   };
   componentDidMount() {
-    this.props.fetchPosts()
+    this.props.fetchPosts();
   };
 
   onCardSelected = (e) => {
-    this.props.history.push(`/posts/${e.post.id}`)
+    this.props.history.push(`/${e.post.category}/${e.post.id}`);
   };
 
   toggle = () => {
     this.setState({
-      openDropdownMenu: !this.state.openDropdownMenu
+      openDropdownMenu: !this.state.openDropdownMenu,
     });
   };
 
@@ -44,7 +44,7 @@ class PostsIndex extends Component {
     const { posts, filter } = this.props;
     const { sortFilter } = this.state;
     if (!posts) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
 
     let filteredPosts;
@@ -109,12 +109,14 @@ class PostsIndex extends Component {
           onCardSelected={(e) => this.onCardSelected(e)}
         />
       </div>
-    )
+    );
   }
 }
 
 function mapStateToProps(state) {
-  return { posts: state.posts.posts }
+  return {
+    posts: state.posts.posts,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -124,6 +126,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)
-  (PostsIndex)
-);
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(PostsIndex));

@@ -121,7 +121,7 @@ const validate = (values) => {
 
 export default reduxForm({
   validate,
-  form: 'NewPostForm', })
-(connect(null, { createPost })
-(NewPost)
-);
+  form: 'NewPostForm', })(connect(
+    null,
+  { createPost }
+)(NewPost));

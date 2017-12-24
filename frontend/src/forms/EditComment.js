@@ -101,7 +101,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default reduxForm({
-  form: 'EditCommentForm', })
-  (connect(mapStateToProps, { fetchComments, editComment })
-  (EditComment)
-);
+  form: 'EditCommentForm', }
+  )(connect(
+    mapStateToProps,
+  { fetchComments, editComment }
+)(EditComment));

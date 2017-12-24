@@ -35,6 +35,8 @@ class PostShow extends Component {
       });
   };
 
+  // TODO add Edit & Delete Post buttons
+  // TODO pass onDeletePost function to Cards component
   // TODO fix thumbs up and down mechanism in PostShow
 
   render() {
@@ -48,12 +50,12 @@ class PostShow extends Component {
 
     if (this.state.redirectToHomePage) {
       return (
-        <Redirect to="/"/>
+        <Redirect to='/' />
       );
     }
 
     const postArray = [post];
-    const EDIT_POST_URL = `/${postArray.category}/${this.props.match.params.id}/edit`;
+    const EDIT_POST_URL = `/${postArray[0].category}/${this.props.match.params.id}/edit`;
 
     return (
       <div>
@@ -70,7 +72,10 @@ class PostShow extends Component {
           </Nav>
         </Navbar>
 
-        <Cards posts={postArray} />
+        <Cards
+          posts={postArray}
+          onCardSelected={() => console.log('do nothing')}
+        />
         <PostComment parentId={postArray.id} />
       </div>
     );
@@ -83,4 +88,7 @@ function mapStateToProps(state) {
   );
 }
 
-export default connect(mapStateToProps, { fetchPost, fetchComments, deletePost })(PostShow)
+export default connect(
+  mapStateToProps,
+  { fetchPost, fetchComments, deletePost }
+  )(PostShow);

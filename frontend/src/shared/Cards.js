@@ -25,11 +25,11 @@ const Deck = (props) => {
           <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap"/>
           <CardBody>
             <CardTitle className="text-primary">{post.title}</CardTitle>
-            <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle><br/>
-            <CardText>Body: {post.body}</CardText>
+            <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle>
+            <CardText>{post.body}</CardText>
+            <CardText className="text-warning">Comment Count: {post.commentCount}</CardText>
             <CardText className="text-danger">Votes: {post.voteScore}</CardText>
             <Votes />
-            <CardText className="text-warning">Comment Count: {post.commentCount}</CardText>
             <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>
             <Button outline color="primary">category: {post.category}</Button>
           </CardBody>

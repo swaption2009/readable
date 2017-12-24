@@ -59,9 +59,7 @@ class EditPost extends Component {
     const { post } = this.state;
     const { handleSubmit, pristine, reset, submitting } = this.props;
 
-    if (post.length === 0) {
-      <div>Loading...</div>;
-    }
+    if (post.length === 0) {return <div>Loading...</div>; }
 
     if (this.state.redirectToHomePage) {
       return (
@@ -124,4 +122,7 @@ class EditPost extends Component {
 
 export default reduxForm({
   form: 'EditPostForm',
-})(connect(null, { fetchPost, editPost })(EditPost));
+})(connect(
+  null,
+  { fetchPost, editPost }
+)(EditPost));

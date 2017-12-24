@@ -3,18 +3,10 @@ import { connect } from 'react-redux';
 import {
   Row,
   Col,
-  Button,
-  Card,
-  CardTitle,
-  CardText,
-  CardDeck,
-  CardSubtitle,
-  CardBody }
-  from 'reactstrap';
-import Votes from '../shared/Votes';
+  } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { deleteComment } from '../actions';
-import Moment from 'react-moment';
+import Cards from '../shared/Cards';
 
 class PostComment extends Component{
   onDeleteComment = (e) => {
@@ -29,7 +21,10 @@ class PostComment extends Component{
       });
   };
 
-  // TODO refactor PostComment to Cards
+  // TODO add Edit & Delete comment buttons
+  // TODO pass onDeleteComment function to Cards component
+  // TODO fix thumbs up and down mechanism in PostComment
+
   render() {
     const { comments, parentId } = this.props;
     const COMMENT_FORM_URL = `/posts/${parentId}/comments/new`;
@@ -56,31 +51,10 @@ class PostComment extends Component{
         { (comments.length === 0) ? <h4>This post needs a comment!!!</h4> :
         <div>
           <h4>Comments for this post:</h4>
-          <CardDeck>
-            {comments.map(comment =>
-              <Card key={comment.id}>
-                <CardBody>
-                  <CardTitle className="text-primary">{comment.title}</CardTitle>
-                  <CardSubtitle className="text-success">
-                    Author: {comment.author}
-                  </CardSubtitle><br/>
-                  <CardText>Body: {comment.body}</CardText>
-                  <CardText>Published Date: <Moment unix>{comment.timestamp}</Moment></CardText>
-                  <Votes id={comment.id} />
-                  <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
-                  <Link to={`/posts/${comment.parentId}/comments/${comment.id}/edit`}>
-                    <Button color="warning">Edit Post</Button>
-                  </Link>{' '}
-                  <Button
-                    color="danger"
-                    data-message={comment.id}
-                    onClick={this.onDeleteComment}>
-                    Delete Post
-                  </Button>
-                </CardBody>
-              </Card>
-            )}
-          </CardDeck>
+          <Cards
+            posts={comments}
+            onCardSelected={() => console.log('do nothing')}
+          />
         </div>
         }
       </div>
@@ -92,4 +66,6 @@ function mapStateToProps({ comments }) {
   return { comments: comments.comments };
 }
 
-export default connect(mapStateToProps, { deleteComment })(PostComment);
+export default connect(
+  mapStateToProps, { deleteComment }
+  )(PostComment);

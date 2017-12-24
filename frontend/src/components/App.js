@@ -6,26 +6,32 @@ import PostsIndex from './PostsIndex';
 
 class App extends Component {
   state = {
-    filter: ''
+    filter: '',
   };
   componentDidMount() {
-    this.props.fetchCategories()
+    this.props.fetchCategories();
   }
+
   onCategorySelected = (category) => {
     this.setState({
-      filter: category.category.name
+      filter: category.category.name,
     });
-    this.props.history.push(`${category.category.name}`)
+    this.props.history.push(`${category.category.name}`);
   };
+
   resetPage = () => {
-    window.location.reload()
-    this.props.history.push("/")
+    this.setState({
+      filter: '',
+    });
+
+    this.props.history.push('/');
   };
+
   render() {
     const categories = this.props.categories;
 
     if (!categories) {
-      return <div>Loading...</div>
+      return <div>Loading...</div>;
     }
 
     return (
@@ -37,7 +43,7 @@ class App extends Component {
             {categories.map(category =>
               <Button key={category.name}
                       outline color="primary"
-                      onClick={() => this.onCategorySelected({category})}>
+                      onClick={() => this.onCategorySelected({ category })}>
                 {category.name}
               </Button>
             )}
@@ -63,4 +69,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
