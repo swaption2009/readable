@@ -13,9 +13,6 @@ import Moment from 'react-moment';
 import Votes from './Votes';
 import PropTypes from 'prop-types';
 
-// TODO show edit / delete button
-// TODO thumbs up / down mechanism
-
 const Deck = (props) => {
   return (
     <div>
@@ -37,7 +34,10 @@ const Deck = (props) => {
               postId={post.id}
               postVotes={post.voteScore} />
             <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>
-            <Badge color="secondary">category: {post.category}</Badge>
+            { !post.category ?
+              <div></div> :
+              <Badge color="secondary">category: {post.category}</Badge>
+            }
           </CardBody>
         </Card>
       )}
