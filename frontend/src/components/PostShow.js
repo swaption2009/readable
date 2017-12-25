@@ -35,10 +35,6 @@ class PostShow extends Component {
       });
   };
 
-  // TODO add Edit & Delete Post buttons
-  // TODO pass onDeletePost function to Cards component
-  // TODO fix thumbs up and down mechanism in PostShow
-
   render() {
     const { post } = this.props;
 
@@ -76,7 +72,9 @@ class PostShow extends Component {
           posts={postArray}
           onCardSelected={() => console.log('do nothing')}
         />
-        <PostComment parentId={postArray.id} />
+        <PostComment
+          category={postArray[0].category}
+          parentId={postArray[0].id} />
       </div>
     );
   }

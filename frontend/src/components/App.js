@@ -8,6 +8,7 @@ class App extends Component {
   state = {
     filter: '',
   };
+
   componentDidMount() {
     this.props.fetchCategories();
   }
@@ -23,7 +24,6 @@ class App extends Component {
     this.setState({
       filter: '',
     });
-
     this.props.history.push('/');
   };
 

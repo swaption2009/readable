@@ -98,7 +98,7 @@ class PostsIndex extends Component {
         <Row>
           <div className="text-xs-right">
             <button className="btn btn-info float-left">
-              Info: click inside the card to see post details
+              Info: click "Title" to "Edit" & "Delete" post & its comments
             </button>
           </div>
         </Row>

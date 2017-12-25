@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Button,
+  Badge,
   Card,
   CardImg,
   CardTitle,
@@ -21,17 +21,23 @@ const Deck = (props) => {
     <div>
       <CardDeck>
       {props.posts.map(post =>
-        <Card key={post.id} onClick={() => props.onCardSelected({ post })}>
+        <Card key={post.id}>
           <CardImg top width="100%" src="http://placekitten.com/g/256/180" alt="Card image cap"/>
           <CardBody>
-            <CardTitle className="text-primary">{post.title}</CardTitle>
+            <CardTitle
+              className="text-primary"
+              onClick={() => props.onCardSelected({ post })}>
+              {post.title}
+            </CardTitle>
             <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle>
             <CardText>{post.body}</CardText>
             <CardText className="text-warning">Comment Count: {post.commentCount}</CardText>
             <CardText className="text-danger">Votes: {post.voteScore}</CardText>
-            <Votes />
+            <Votes
+              postId={post.id}
+              postVotes={post.voteScore} />
             <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>
-            <Button outline color="primary">category: {post.category}</Button>
+            <Badge color="secondary">category: {post.category}</Badge>
           </CardBody>
         </Card>
       )}

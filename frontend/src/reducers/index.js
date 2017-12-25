@@ -6,6 +6,7 @@ import {
   FETCH_POST,
   FETCH_COMMENTS,
   CREATE_COMMENT,
+  POST_VOTE,
 } from '../actions';
 
 function categories(state = {}, action) {
@@ -22,6 +23,11 @@ function categories(state = {}, action) {
 
 function posts(state = {}, action) {
   switch (action.type) {
+    case POST_VOTE:
+      return {
+        ...state,
+        post: action.payload.data,
+      };
     case FETCH_POST:
       return {
         post: action.payload.data,

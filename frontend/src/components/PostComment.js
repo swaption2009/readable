@@ -21,13 +21,9 @@ class PostComment extends Component{
       });
   };
 
-  // TODO add Edit & Delete comment buttons
-  // TODO pass onDeleteComment function to Cards component
-  // TODO fix thumbs up and down mechanism in PostComment
-
   render() {
-    const { comments, parentId } = this.props;
-    const COMMENT_FORM_URL = `/posts/${parentId}/comments/new`;
+    const { comments, parentId, category } = this.props;
+    const COMMENT_FORM_URL = `/${category}/${parentId}/comments/new`;
 
     if (!comments) {
       return (
