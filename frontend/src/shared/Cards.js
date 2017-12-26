@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Badge,
+  Button,
   Card,
   CardImg,
   CardTitle,
@@ -14,6 +16,10 @@ import Votes from './Votes';
 import PropTypes from 'prop-types';
 
 const Deck = (props) => {
+  // TODO handle Post vs Comment UI differences, ie. Title and Comment Count
+  // TODO thumbs up & down Redux store
+  // TODO implement Edit & Delete Post or Comment
+
   return (
     <div>
       <CardDeck>
@@ -38,6 +44,16 @@ const Deck = (props) => {
               <div></div> :
               <Badge color="secondary">category: {post.category}</Badge>
             }
+            <br/>
+            <Link to="/">
+              <Button color="warning">Edit</Button>
+            </Link>{' '}
+            <Button
+              color="danger"
+              data-message={post.id}
+              onClick={this.onDeleteComment}>
+              Delete
+            </Button>
           </CardBody>
         </Card>
       )}

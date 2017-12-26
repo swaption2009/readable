@@ -38,8 +38,6 @@ class PostsIndex extends Component {
     });
   };
 
-  // TODO fix thumbs up and down mechanism in PostsIndex component
-
   render() {
     const { posts, filter } = this.props;
     const { sortFilter } = this.state;

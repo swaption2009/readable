@@ -3,18 +3,10 @@ import { connect } from 'react-redux';
 import {
   Row,
   Col,
-  Button,
-  Card,
-  CardTitle,
-  CardText,
-  CardDeck,
-  CardSubtitle,
-  CardBody }
-  from 'reactstrap';
+  } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { deleteComment } from '../actions';
-import Moment from 'react-moment';
-import Votes from '../shared/Votes';
+import Cards from '../shared/Cards';
 
 class PostComment extends Component{
   onDeleteComment = (e) => {
@@ -55,31 +47,10 @@ class PostComment extends Component{
         { (comments.length === 0) ? <h4>This post needs a comment!!!</h4> :
           <div>
             <h4>Comments for this post:</h4>
-            <CardDeck>
-              {comments.map(comment =>
-                <Card key={comment.id}>
-                  <CardBody>
-                    <CardTitle className="text-primary">{comment.title}</CardTitle>
-                    <CardSubtitle className="text-success">
-                      Author: {comment.author}
-                    </CardSubtitle><br/>
-                    <CardText>Body: {comment.body}</CardText>
-                    <CardText>Published Date: <Moment unix>{comment.timestamp}</Moment></CardText>
-                    <Votes id={comment.id} />
-                    <CardText className="text-danger">Votes: {comment.voteScore}</CardText>
-                    <Link to={`/posts/${comment.parentId}/comments/${comment.id}/edit`}>
-                      <Button color="warning">Edit Post</Button>
-                    </Link>{' '}
-                    <Button
-                      color="danger"
-                      data-message={comment.id}
-                      onClick={this.onDeleteComment}>
-                        Delete Post
-                    </Button>
-                  </CardBody>
-                </Card>
-              )}
-            </CardDeck>
+            <Cards
+              posts={comments}
+              onCardSelected={(e) => this.onCardSelected(e)}
+            />
           </div>
         }
       </div>

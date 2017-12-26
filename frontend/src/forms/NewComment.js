@@ -44,7 +44,6 @@ class NewComment extends Component {
       });
   };
 
-  // TODO fix redirect to POST_URL
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
 

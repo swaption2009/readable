@@ -6,7 +6,6 @@ import Cards from '../shared/Cards';
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
 import PostComment from './PostComment';
 import {
-  Button,
   Navbar,
   Nav,
   NavItem }
@@ -51,7 +50,6 @@ class PostShow extends Component {
     }
 
     const postArray = [post];
-    const EDIT_POST_URL = `/${postArray[0].category}/${this.props.match.params.id}/edit`;
 
     return (
       <div>
@@ -61,9 +59,7 @@ class PostShow extends Component {
               <Link to="/">
                 <FaArrowCircleLeft size={40} color="blue" />
                 Back to post index page
-              </Link>{' '}
-              <Link to={EDIT_POST_URL}><Button color="warning">Edit Post</Button></Link>{' '}
-              <Button color="danger" onClick={this.onDeletePost}>Delete Post</Button>
+              </Link>
             </NavItem>
           </Nav>
         </Navbar>
