@@ -24,10 +24,20 @@ function categories(state = {}, action) {
 function posts(state = {}, action) {
   switch (action.type) {
     case POST_VOTE:
-      return {
-        ...state,
-        post: action.payload.data,
-      };
+      if (!state.posts) {
+        return {
+          ...state,
+          post: action.payload.data,
+        };
+      } else {
+        return {
+          ...state,
+          posts:
+            state.posts.filter(post => post.id !== action.payload.data.id)
+            .concat(action.payload.data),
+        };
+      }
+
     case FETCH_POST:
       return {
         post: action.payload.data,
