@@ -46,8 +46,6 @@ class NewComment extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
-
-    // TODO fix URL /:category/:id
     const POST_URL = `/posts/${this.props.match.params.id}`;
 
     if (this.state.redirectToPageShow) {

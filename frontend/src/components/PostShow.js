@@ -22,18 +22,6 @@ class PostShow extends Component {
     this.props.fetchComments(id);
   }
 
-  onDeletePost = () => {
-    const { id } = this.props.match.params;
-    this.props.deletePost(id)
-      .then(res => {
-        if (res.payload.status === 200) {
-          this.setState({ redirectToHomePage: true });
-        } else {
-          console.log('error');
-        }
-      });
-  };
-
   render() {
     const { post } = this.props;
 
@@ -66,6 +54,7 @@ class PostShow extends Component {
 
         <Cards
           posts={postArray}
+          type="post"
           onCardSelected={() => console.log('do nothing')}
         />
         <PostComment
