@@ -50,5 +50,7 @@ function mapStateToProps({ comments }) {
 }
 
 export default connect(
-  mapStateToProps, { deleteComment }
-  )(PostComment);
+  mapStateToProps,
+  { deleteComment }
+  )
+(PostComment);

@@ -28,7 +28,6 @@ class Deck extends Component {
     redirectToPageShow: false,
   };
 
-  // TODO thumbs up & down Redux store
   onDeletePost = (e) => {
     this.props.deletePost(e.target.dataset.message)
       .then(res => {
@@ -77,7 +76,7 @@ class Deck extends Component {
               <CardBody>
                 <CardTitle
                   className="text-primary"
-                  onClick={() => onCardSelected({ post })}>
+                  onClick={() => onCardSelected({ post })} >
                   {post.title}
                 </CardTitle>
                 <CardSubtitle className="text-success">Author: {post.author}</CardSubtitle>

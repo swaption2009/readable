@@ -60,7 +60,9 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  return { categories: state.categories.categories };
+  return {
+    categories: state.categories.categories,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

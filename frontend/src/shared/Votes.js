@@ -33,8 +33,7 @@ class Votes extends Component {
       } else {
         console.log('COMMENT VOTE ERROR');
       }
-    });;
-    window.location.reload();
+    });
   };
 
   render() {
@@ -51,6 +50,15 @@ class Votes extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  // console.log('mapStateToProps votes: ', state, ownProps);
+  // console.log('comment votes: ', state.comments.comments);
+  return {
+    post: state.posts.posts,
+    comments: state.comments.comments,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   { postVote, commentVote })(Votes);
