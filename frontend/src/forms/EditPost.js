@@ -15,6 +15,7 @@ class EditPost extends Component {
     post: {},
     redirectToHomePage: false,
   };
+
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchPost(id)
@@ -84,24 +85,20 @@ class EditPost extends Component {
         <p>(Published Date will be updated on the background)</p>
 
         <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
-          <Field label="Title"
+          <Field label={post.title}
                  name="title"
                  type="text"
-                 placeholder={post.title}
                  component={this.renderTextField}/><br/>
-          <Field label="Body"
+          <Field label={post.body}
                  name="body"
                  type="text"
-                 placeholder={post.body}
                  component={this.renderTextField} /><br/>
-          <Field label="Author"
+          <Field label={post.author}
                  name="author"
                  type="text"
-                 placeholder={post.author}
                  component={this.renderTextField} /><br/>
-          <Field label="Category"
+          <Field label={post.category}
                  name="category"
-                 placeholder={post.category}
                  component={this.renderSelectField}>
             <MenuItem value="react" primaryText="react" />
             <MenuItem value="redux" primaryText="redux" />

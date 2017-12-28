@@ -31,7 +31,6 @@ class EditComment extends Component {
   onSubmit = (values) => {
     const id = this.props.match.params.id;
     values.timestamp = Date.now();
-    console.log(values, id);
     this.props.editComment(values, id)
       .then(res => {
         if (res.payload.status === 200) {
@@ -70,17 +69,14 @@ class EditComment extends Component {
         <p>(Published Date will be updated on the background)</p>
 
         <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
-          <Field label="Body"
+          <Field label={comment.body}
                  name="body"
                  type="text"
-                 placeholder={comment.body}
                  component={this.renderTextField} /><br/>
-          <Field label="Author"
+          <Field label={comment.author}
                  name="author"
                  type="text"
-                 placeholder={comment.author}
                  component={this.renderTextField} /><br/>
-
           <Button type="submit" color="primary" disabled={pristine || submitting}>
             Submit Form
           </Button>{' '}
