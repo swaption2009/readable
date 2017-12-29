@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postVote, commentVote } from '../actions/index';
+import {
+  postVote,
+  commentVote,
+  fetchPost
+} from '../actions/index';
 import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up';
 import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down';
 
@@ -26,10 +30,12 @@ class Votes extends Component {
           console.log('POST VOTE ERROR');
         }
       });
+    // TODO run either postVote or commentVote (not both) by adding type
     this.props.commentVote(id, vote)
       .then(res => {
       if (res.payload.status === 200) {
         console.log('COMMENT VOTED SUCCESSFULLY');
+        this.props.fetchPost(res.payload.data.parentId);
       } else {
         console.log('COMMENT VOTE ERROR');
       }
@@ -50,9 +56,7 @@ class Votes extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  // console.log('mapStateToProps votes: ', state, ownProps);
-  // console.log('comment votes: ', state.comments.comments);
+const mapStateToProps = (state) => {
   return {
     post: state.posts.posts,
     comments: state.comments.comments,
@@ -61,4 +65,4 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { postVote, commentVote })(Votes);
+  { postVote, commentVote, fetchPost })(Votes);

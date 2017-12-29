@@ -6,7 +6,7 @@ import {
   FETCH_POST,
   FETCH_COMMENTS,
   CREATE_COMMENT,
-  POST_VOTE,
+  POST_VOTE, COMMENT_VOTE,
 } from '../actions';
 
 function categories(state = {}, action) {
@@ -32,8 +32,8 @@ function posts(state = {}, action) {
       } else {
         return {
           ...state,
-          posts:
-            state.posts.filter(post => post.id !== action.payload.data.id)
+          posts: state.posts
+            .filter(post => post.id !== action.payload.data.id)
             .concat(action.payload.data),
         };
       }
@@ -54,6 +54,13 @@ function posts(state = {}, action) {
 
 function comments(state = {}, action) {
   switch (action.type) {
+    case COMMENT_VOTE:
+      return {
+        ...state,
+        comments: state.comments
+          .filter(comment => comment.id !== action.payload.data.id)
+          .concat(action.payload.data),
+      };
     case CREATE_COMMENT:
       const newComment = JSON.parse(action.payload.config.data);
       return {
