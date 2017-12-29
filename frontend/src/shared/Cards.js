@@ -87,6 +87,7 @@ class Deck extends Component {
                 }
                 <CardText className="text-danger">Votes: {post.voteScore}</CardText>
                 <Votes
+                  type={type}
                   postId={post.id}
                   postVotes={post.voteScore} />
                 <CardText>Published Date: <Moment unix>{post.timestamp}</Moment></CardText>

@@ -12,34 +12,39 @@ class Votes extends Component {
   onThumbsUp = () => {
     const id = this.props.postId;
     const vote = { 'option': 'upVote' };
-    this.onSendVote(id, vote);
+    const type = this.props.type;
+    this.onSendVote(id, vote,type);
   };
 
   onThumbsDown = () => {
     const id = this.props.postId;
     const vote = { 'option': 'downVote' };
-    this.onSendVote(id, vote);
+    const type = this.props.type;
+    this.onSendVote(id, vote, type);
   };
 
-  onSendVote = (id, vote) => {
-    this.props.postVote(id, vote)
-      .then(res => {
-        if (res.payload.status === 200) {
-          console.log('POST VOTED SUCCESSFULLY');
-        } else {
-          console.log('POST VOTE ERROR');
-        }
-      });
-    // TODO run either postVote or commentVote (not both) by adding type
-    this.props.commentVote(id, vote)
-      .then(res => {
-      if (res.payload.status === 200) {
-        console.log('COMMENT VOTED SUCCESSFULLY');
-        this.props.fetchPost(res.payload.data.parentId);
-      } else {
-        console.log('COMMENT VOTE ERROR');
-      }
-    });
+  onSendVote = (id, vote, type) => {
+    // console.log(type);
+    if (type === 'comment') {
+      this.props.commentVote(id, vote)
+        .then(res => {
+          if (res.payload.status === 200) {
+            console.log('COMMENT VOTED SUCCESSFULLY');
+            this.props.fetchPost(res.payload.data.parentId);
+          } else {
+            console.log('COMMENT VOTE ERROR');
+          }
+        });
+    } else {
+      this.props.postVote(id, vote)
+        .then(res => {
+          if (res.payload.status === 200) {
+            console.log('POST VOTED SUCCESSFULLY');
+          } else {
+            console.log('POST VOTE ERROR');
+          }
+        });
+    }
   };
 
   render() {
