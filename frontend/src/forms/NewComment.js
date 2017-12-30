@@ -46,7 +46,7 @@ class NewComment extends Component {
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
-    const POST_URL = `/posts/${this.props.match.params.id}`;
+    const POST_URL = `/${this.props.post.category}/${this.props.match.params.id}`;
 
     if (this.state.redirectToPageShow) {
       return (
@@ -101,9 +101,13 @@ const validate = (values) => {
   return errors;
 };
 
+const mapStateToProps = (state) => {
+  return { post: state.posts.post };
+};
+
 export default reduxForm({
   validate,
   form: 'NewCommentForm', })(connect(
-    null,
+    mapStateToProps,
     { createComment }
 )(NewComment));

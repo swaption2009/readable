@@ -13,7 +13,7 @@ class Votes extends Component {
     const id = this.props.postId;
     const vote = { 'option': 'upVote' };
     const type = this.props.type;
-    this.onSendVote(id, vote,type);
+    this.onSendVote(id, vote, type);
   };
 
   onThumbsDown = () => {
