@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchPost, editPost } from '../actions';
 import { Field, reduxForm } from 'redux-form';
-import { Container, Button } from 'reactstrap';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'reactstrap';
+import {
+  fetchPost,
+  editPost,
+} from '../actions';
+import {
+  Container,
+  Button,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Nav,
+  Navbar,
+  NavItem,
+} from 'reactstrap';
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
 
-class EditPost extends Component {
+const form = reduxForm({
+  form: 'EditPostForm',
+  validate,
+});
+
+const renderField = field => (
+  <div>
+    <Input {...field.input}/>
+    {field.touched && field.error && <div className="error">{field.error}</div>}
+  </div>
+  );
+
+class EditPostForm extends Component {
   state = {
-    post: {},
     redirectToHomePage: false,
   };
 
@@ -20,29 +40,24 @@ class EditPost extends Component {
     const { id } = this.props.match.params;
     this.props.fetchPost(id)
       .then(res =>
-        this.setState({ post: res.payload.data })
-      );
-  };
+        this.handleInitialize(res.payload.data));
+  }
 
-  renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-    <TextField
-      hintText={label}
-      floatingLabelText={label}
-      errorText={touched && error}
-      {...input}
-      {...custom}
-    />
-  );
-  renderSelectField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
-    <SelectField
-      floatingLabelText={label}
-      errorText={touched && error}
-      {...input}
-      onChange={(event, index, value) => input.onChange(value)}
-      children={children}
-      {...custom}
-    />
-  );
+  handleInitialize() {
+    if (!this.props.post) {
+      console.log('this.props.post empty');
+    } else {
+      const initData = {
+        title: this.props.post.title,
+        body: this.props.post.body,
+        author: this.props.post.author,
+        category: this.props.post.category,
+      };
+
+      this.props.initialize(initData);
+    }
+  }
+
   onSubmit = (values) => {
     const id = this.props.match.params;
     values.timestamp = Date.now();
@@ -57,10 +72,7 @@ class EditPost extends Component {
   };
 
   render() {
-    const { post } = this.state;
-    const { handleSubmit, pristine, reset, submitting } = this.props;
-
-    if (post.length === 0) {return <div>Loading...</div>; }
+    const { handleSubmit } = this.props;
 
     if (this.state.redirectToHomePage) {
       return (
@@ -84,42 +96,64 @@ class EditPost extends Component {
         <h2>Edit Page Form</h2>
         <p>(Published Date will be updated on the background)</p>
 
-        <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>
-          <Field label={post.title}
-                 name="title"
-                 type="text"
-                 component={this.renderTextField}/><br/>
-          <Field label={post.body}
-                 name="body"
-                 type="text"
-                 component={this.renderTextField} /><br/>
-          <Field label={post.author}
-                 name="author"
-                 type="text"
-                 component={this.renderTextField} /><br/>
-          <Field label={post.category}
-                 name="category"
-                 component={this.renderSelectField}>
-            <MenuItem value="react" primaryText="react" />
-            <MenuItem value="redux" primaryText="redux" />
-            <MenuItem value="udacity" primaryText="udacity" />
-          </Field><br/>
-          <Button type="submit" color="primary" disabled={pristine || submitting}>
-            Submit Form
-          </Button>{' '}
+        <FormGroup>
+          <Form onSubmit={handleSubmit(this.onSubmit)}>
 
-          <Button type="submit" color="danger" onClick={reset}>
-            Reset Form
-          </Button>
-        </form>
+            <Label>Title:</Label>
+            <Field name="title" type="text" component={renderField}/>
+
+            <Label>Body:</Label>
+            <Field name="body" type="text" component={renderField}/>
+
+            <Label>Author:</Label>
+            <Field name="author" type="text" component={renderField} />
+
+            <Label>Category:</Label><br/>
+            <Field name="category" type="select" component="select">
+              <option name="react">React</option>
+              <option name="redux">Redux</option>
+              <option name="udacity">Udacity</option>
+            </Field>
+            <br/>
+            <br/>
+
+            <Button action="submit">Save changes</Button>
+          </Form>
+        </FormGroup>
       </Container>
     );
   }
 }
 
-export default reduxForm({
-  form: 'EditPostForm',
-})(connect(
-  null,
-  { fetchPost, editPost }
-)(EditPost));
+function validate(formProps) {
+  const errors = {};
+
+  if (!formProps.title) {
+    errors.title = 'Please enter a title';
+  }
+
+  if (!formProps.body) {
+    errors.body = 'Please enter texts for the post';
+  }
+
+  if (!formProps.author) {
+    errors.author = 'Please enter the name of the author';
+  }
+
+  if (!formProps.category) {
+    errors.category = 'Please select a category';
+  }
+
+  return errors;
+}
+
+function mapStateToProps(state) {
+  return {
+    post: state.posts.post,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { fetchPost, editPost })
+(form(EditPostForm));
