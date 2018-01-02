@@ -78,7 +78,7 @@ class NewPost extends Component {
           </Nav>
         </Navbar>
 
-        <h2>New Page Form</h2>
+        <h2>New Post Form</h2>
         <p>(UUID and Publised Date are created on the background)</p>
 
         <form className="form-group" onSubmit={handleSubmit(this.onSubmit)}>

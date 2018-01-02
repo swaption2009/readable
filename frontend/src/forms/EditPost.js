@@ -155,5 +155,7 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { fetchPost, editPost })
+  { fetchPost,
+    editPost,
+  })
 (form(EditPostForm));
