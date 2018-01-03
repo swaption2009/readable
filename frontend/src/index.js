@@ -25,6 +25,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import NewComment from './forms/NewComment';
 import EditPost from './forms/EditPost';
 import EditComment from './forms/EditComment';
+import NotFound404 from './helpers/NotFound404';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -50,6 +51,8 @@ ReactDOM.render(
           <Route exact path="/:category/:id/edit" component={EditPost} />
           <Route exact path="/:category/:id/comments/new" component={NewComment} />
           <Route exact path="/:category/:id/comments/:id/edit" component={EditComment} />
+          <Route exact path="/:category/notFound" component={NotFound404}/>
+          <Route component={NotFound404}/>
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>

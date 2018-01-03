@@ -157,5 +157,4 @@ export default connect(
   mapStateToProps,
   { fetchPost,
     editPost,
-  })
-(form(EditPostForm));
+  })(form(EditPostForm));

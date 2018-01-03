@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPost, fetchComments, deletePost } from '../actions';
+import {
+  fetchPost,
+  fetchComments,
+  deletePost
+} from '../actions';
 import { Link, Redirect } from 'react-router-dom';
 import Cards from '../shared/Cards';
 import FaArrowCircleLeft from 'react-icons/lib/fa/arrow-circle-left';
@@ -18,7 +22,15 @@ class PostShow extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchPost(id);
+    this.props.fetchPost(id)
+      .then(res => {
+        if (!res.payload.data.id) {
+          console.log('error in fetchPost');
+          this.props.history.push('/');
+        } else {
+          console.log(res);
+        }
+      });
     this.props.fetchComments(id);
   }
 

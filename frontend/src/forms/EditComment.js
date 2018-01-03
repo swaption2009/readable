@@ -130,5 +130,4 @@ export default connect(
   mapStateToProps,
   { fetchComments,
     editComment,
-  })
-(form(EditCommentForm));
+  })(form(EditCommentForm));
